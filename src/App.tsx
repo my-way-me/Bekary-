@@ -1,132 +1,185 @@
-import { useState, useCallback } from 'react';
-import { Product } from './data/products';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import HomePage from './components/HomePage';
-import MenuPage from './components/MenuPage';
-import AboutPage from './components/AboutPage';
-import ContactPage from './components/ContactPage';
-import OrderPage from './components/OrderPage';
-import CartSidebar, { CartItem } from './components/CartSidebar';
-import Footer from './components/Footer';
-import Toast from './components/Toast';
+import { useState, useEffect, useCallback } from "react";
+import { LS, SS } from "@/lib/utils";
+import {
+  DEFAULT_PRODUCTS,
+  DEFAULT_SETTINGS,
+  type Product,
+  type Settings,
+  type Order,
+  type CartItem,
+  type User,
+} from "@/data/constants";
+import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import SpecialOffers from "@/components/SpecialOffers";
+import MenuSection from "@/components/MenuSection";
+import CustomCake from "@/components/CustomCake";
+import AboutSection from "@/components/AboutSection";
+import Testimonials from "@/components/Testimonials";
+import ContactSection from "@/components/ContactSection";
+import Footer from "@/components/Footer";
+import CartDrawer from "@/components/CartDrawer";
+import CheckoutModal from "@/components/CheckoutModal";
+import AuthModal from "@/components/AuthModal";
+import AdminPanel from "@/components/AdminPanel";
+import WhatsAppFloat from "@/components/WhatsAppFloat";
+import Toasts from "@/components/Toasts";
+
+interface ToastItem {
+  id: number;
+  message: string;
+  type: "success" | "error";
+}
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('home');
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [cartOpen, setCartOpen] = useState(false);
-  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
+  const [products, setProducts] = useState<Product[]>(() =>
+    LS("products", DEFAULT_PRODUCTS)
+  );
+  const [settings, setSettings] = useState<Settings>(() =>
+    LS("settings", DEFAULT_SETTINGS)
+  );
+  const [orders, setOrders] = useState<Order[]>(() => LS("orders", []));
+  const [user, setUser] = useState<User | null>(() => LS("currentUser", null));
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [promoCode, setPromoCode] = useState("");
+  const [discount, setDiscount] = useState(0);
+  const [toasts, setToasts] = useState<ToastItem[]>([]);
 
-  const showToast = useCallback((message: string, type: 'success' | 'error' | 'info' = 'success') => {
-    setToast({ message, type });
-  }, []);
+  useEffect(() => {
+    SS("products", products);
+  }, [products]);
+  useEffect(() => {
+    SS("settings", settings);
+  }, [settings]);
+  useEffect(() => {
+    SS("orders", orders);
+  }, [orders]);
+  useEffect(() => {
+    SS("currentUser", user);
+  }, [user]);
 
-  const handleAddToCart = useCallback((product: Product) => {
-    setCartItems((prev) => {
-      const existing = prev.find((item) => item.product.id === product.id);
-      if (existing) {
-        return prev.map((item) =>
-          item.product.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
+  const showToast = useCallback(
+    (msg: string, type: "success" | "error" = "success") => {
+      const id = Date.now();
+      setToasts((p) => [...p, { id, message: msg, type }]);
+      setTimeout(() => {
+        setToasts((p) => p.filter((t) => t.id !== id));
+      }, 3500);
+    },
+    []
+  );
+
+  const addToCart = (p: Product) => {
+    setCart((prev) => {
+      const ex = prev.find((i) => i.id === p.id);
+      if (ex)
+        return prev.map((i) =>
+          i.id === p.id ? { ...i, quantity: i.quantity + 1 } : i
         );
-      }
-      return [...prev, { product, quantity: 1 }];
+      return [...prev, { ...p, quantity: 1 }];
     });
-    showToast(`${product.name} কার্টে যোগ হয়েছে!`);
-  }, [showToast]);
+    showToast(`"${p.name}" কার্টে যোগ হয়েছে!`);
+  };
 
-  const handleUpdateQuantity = useCallback((id: number, delta: number) => {
-    setCartItems((prev) =>
-      prev
-        .map((item) =>
-          item.product.id === id
-            ? { ...item, quantity: item.quantity + delta }
-            : item
-        )
-        .filter((item) => item.quantity > 0)
-    );
-  }, []);
+  const addCustomCake = (p: CartItem) => {
+    setCart((prev) => [...prev, p]);
+    showToast("কাস্টম কেক কার্টে যুক্ত হয়েছে!");
+    setIsCartOpen(true);
+  };
 
-  const handleRemove = useCallback((id: number) => {
-    setCartItems((prev) => prev.filter((item) => item.product.id !== id));
-  }, []);
-
-  const handleCheckout = useCallback(() => {
-    setCartOpen(false);
-    setCurrentPage('order');
-  }, []);
-
-  const handleOrderSuccess = useCallback(() => {
-    setCartItems([]);
-    showToast('অর্ডার সফল হয়েছে! ধন্যবাদ।');
-  }, [showToast]);
-
-  const handlePageChange = useCallback((page: string) => {
-    setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
-
-  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'home':
-        return (
-          <>
-            <Hero onPageChange={handlePageChange} />
-            <HomePage onAddToCart={handleAddToCart} onPageChange={handlePageChange} />
-          </>
-        );
-      case 'menu':
-        return <MenuPage onAddToCart={handleAddToCart} />;
-      case 'about':
-        return <AboutPage />;
-      case 'contact':
-        return <ContactPage />;
-      case 'order':
-        return <OrderPage cartItems={cartItems} onSuccess={handleOrderSuccess} />;
-      default:
-        return (
-          <>
-            <Hero onPageChange={handlePageChange} />
-            <HomePage onAddToCart={handleAddToCart} onPageChange={handlePageChange} />
-          </>
-        );
+  const updateQty = (id: number | string, q: number) => {
+    if (q < 1) {
+      setCart((p) => p.filter((i) => i.id !== id));
+      showToast("আইটেম মুছে ফেলা হয়েছে", "error");
+    } else {
+      setCart((p) => p.map((i) => (i.id === id ? { ...i, quantity: q } : i)));
     }
   };
 
+  const removeItem = (id: number | string) => {
+    setCart((p) => p.filter((i) => i.id !== id));
+    showToast("আইটেম মুছে ফেলা হয়েছে", "error");
+  };
+
+  const cartCount = cart.reduce((s, i) => s + i.quantity, 0);
+
   return (
-    <div className="min-h-screen bg-white font-sans">
+    <div className="min-h-screen flex flex-col">
       <Navbar
         cartCount={cartCount}
-        onCartClick={() => setCartOpen(true)}
-        onPageChange={handlePageChange}
-        currentPage={currentPage}
+        onOpenCart={() => setIsCartOpen(true)}
+        user={user}
+        onOpenAuth={() => setIsAuthOpen(true)}
+        onLogout={() => {
+          setUser(null);
+          SS("currentUser", null);
+          showToast("সফলভাবে লগআউট হয়েছে");
+        }}
       />
-
-      <main>
-        {renderPage()}
-      </main>
-
-      <Footer onPageChange={handlePageChange} />
-
-      <CartSidebar
-        isOpen={cartOpen}
-        onClose={() => setCartOpen(false)}
-        items={cartItems}
-        onUpdateQuantity={handleUpdateQuantity}
-        onRemove={handleRemove}
-        onCheckout={handleCheckout}
+      <Hero onAdminTrigger={() => setIsAdminOpen(true)} />
+      <SpecialOffers settings={settings} />
+      <MenuSection products={products} onAddToCart={addToCart} />
+      <CustomCake onAddCustomCake={addCustomCake} />
+      <AboutSection />
+      <Testimonials />
+      <ContactSection showToast={showToast} />
+      <Footer />
+      <WhatsAppFloat />
+      <CartDrawer
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cart={cart}
+        onUpdateQty={updateQty}
+        onRemove={removeItem}
+        onCheckout={() => {
+          setIsCartOpen(false);
+          setIsCheckoutOpen(true);
+        }}
+        promoCode={promoCode}
+        setPromoCode={setPromoCode}
+        discount={discount}
+        onApplyPromo={setDiscount}
+        showToast={showToast}
+        settings={settings}
       />
-
-      {toast && (
-        <Toast
-          message={toast.message}
-          type={toast.type}
-          onClose={() => setToast(null)}
-        />
-      )}
+      <CheckoutModal
+        isOpen={isCheckoutOpen}
+        onClose={() => setIsCheckoutOpen(false)}
+        cart={cart}
+        discount={discount}
+        onClearCart={() => {
+          setCart([]);
+          setDiscount(0);
+          setPromoCode("");
+        }}
+        showToast={showToast}
+        settings={settings}
+        onOrderPlaced={(o) => setOrders((prev) => [o, ...prev])}
+      />
+      <AuthModal
+        isOpen={isAuthOpen}
+        onClose={() => setIsAuthOpen(false)}
+        onLogin={(u) => {
+          setUser(u);
+          setIsAuthOpen(false);
+          showToast(`স্বাগতম, ${u.name}!`);
+        }}
+      />
+      <AdminPanel
+        isOpen={isAdminOpen}
+        onClose={() => setIsAdminOpen(false)}
+        products={products}
+        setProducts={setProducts}
+        settings={settings}
+        setSettings={setSettings}
+        orders={orders}
+        showToast={showToast}
+      />
+      <Toasts toasts={toasts} />
     </div>
   );
 }

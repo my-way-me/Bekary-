@@ -1,149 +1,81 @@
-interface FooterProps {
-  onPageChange: (page: string) => void;
-}
+export default function Footer() {
+  const links = [
+    { name: "হোম", href: "#hero" },
+    { name: "মেন্যু", href: "#menu" },
+    { name: "কাস্টম কেক", href: "#custom-cake" },
+    { name: "আমাদের কথা", href: "#about" },
+    { name: "রিভিউ", href: "#reviews" },
+  ];
 
-export default function Footer({ onPageChange }: FooterProps) {
   return (
-    <footer className="bg-gray-900 text-white">
-      {/* Main Footer */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          {/* Brand */}
+    <footer className="bg-gradient-to-b from-gray-900 to-rose-950 text-white pt-14 pb-8 border-t-4 border-rose-500">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-white/10">
           <div>
-            <div className="flex items-center gap-3 mb-5">
-              <span className="text-4xl">🎂</span>
-              <div>
-                <div
-                  className="text-2xl font-bold text-white"
-                  style={{ fontFamily: "'Hind Siliguri', sans-serif" }}
-                >
-                  মিষ্টি স্বপ্ন
-                </div>
-                <div className="text-rose-400 text-sm">Cake & Bakery</div>
-              </div>
+            <div className="flex items-center gap-3 mb-4">
+              <span className="text-2xl">🎂</span>
+              <h2 className="text-xl font-bold">বেক আর্ট স্টাইল</h2>
             </div>
-            <p
-              className="text-gray-400 text-sm leading-relaxed mb-5"
-              style={{ fontFamily: "'Hind Siliguri', sans-serif" }}
-            >
-              ভালোবাসা দিয়ে তৈরি প্রতিটি মিষ্টি। আপনার প্রতিটি বিশেষ মুহূর্তকে অবিস্মরণীয় করে তুলি আমরা।
+            <p className="text-xs text-gray-400 leading-relaxed mb-5">
+              কুমিল্লার হাট বলি বাড়ির হোমমেড বেকারি। ১০০% তাজা ও খাঁটি কেক, ডেলিভারি
+              সার্ভিস।
             </p>
-            {/* Social */}
             <div className="flex gap-3">
-              {['📘', '📷', '🐦', '▶️'].map((icon, i) => (
-                <button
-                  key={i}
-                  className="w-9 h-9 bg-gray-800 hover:bg-rose-700 rounded-full flex items-center justify-center text-base transition-all hover:scale-110"
-                >
-                  {icon}
-                </button>
-              ))}
+              <a
+                href="https://www.tiktok.com/@bakeartstyel"
+                target="_blank"
+                rel="noreferrer"
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-rose-500 flex items-center justify-center text-xs font-bold transition-colors"
+              >
+                TT
+              </a>
+              <a
+                href="https://wa.me/8801764411168"
+                target="_blank"
+                rel="noreferrer"
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-green-500 flex items-center justify-center text-xs font-bold transition-colors"
+              >
+                WA
+              </a>
+              <a
+                href="tel:+8801764411168"
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-rose-500 flex items-center justify-center text-xs font-bold transition-colors"
+              >
+                📞
+              </a>
             </div>
           </div>
-
-          {/* Quick Links */}
           <div>
-            <h3
-              className="text-white font-bold text-lg mb-5"
-              style={{ fontFamily: "'Hind Siliguri', sans-serif" }}
-            >
-              দ্রুত লিংক
+            <h3 className="text-xs font-bold uppercase tracking-wider text-rose-400 mb-4">
+              প্রয়োজনীয় লিংক
             </h3>
-            <div className="space-y-3">
-              {[
-                { label: 'হোম', page: 'home' },
-                { label: 'মেনু', page: 'menu' },
-                { label: 'অর্ডার করুন', page: 'order' },
-                { label: 'আমাদের সম্পর্কে', page: 'about' },
-                { label: 'যোগাযোগ', page: 'contact' },
-              ].map((link) => (
-                <button
-                  key={link.page}
-                  onClick={() => onPageChange(link.page)}
-                  className="block text-gray-400 hover:text-rose-400 text-sm transition-colors"
-                  style={{ fontFamily: "'Hind Siliguri', sans-serif" }}
-                >
-                  → {link.label}
-                </button>
+            <ul className="flex flex-col gap-2 text-xs text-gray-300">
+              {links.map((l) => (
+                <li key={l.name}>
+                  <a href={l.href} className="hover:text-rose-400 transition-colors">
+                    {l.name}
+                  </a>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
-
-          {/* Popular Items */}
           <div>
-            <h3
-              className="text-white font-bold text-lg mb-5"
-              style={{ fontFamily: "'Hind Siliguri', sans-serif" }}
-            >
-              জনপ্রিয় আইটেম
+            <h3 className="text-xs font-bold uppercase tracking-wider text-rose-400 mb-4">
+              যোগাযোগ তথ্য
             </h3>
-            <div className="space-y-3">
-              {[
-                'চকোলেট ড্রিম কেক',
-                'রেড ভেলভেট কেক',
-                'ফ্রুট ক্রিম পেস্ট্রি',
-                'চকো চিপ কুকি',
-                'বিবাহ কেক (কাস্টম)',
-              ].map((item) => (
-                <button
-                  key={item}
-                  onClick={() => onPageChange('menu')}
-                  className="block text-gray-400 hover:text-rose-400 text-sm transition-colors"
-                  style={{ fontFamily: "'Hind Siliguri', sans-serif" }}
-                >
-                  🍰 {item}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h3
-              className="text-white font-bold text-lg mb-5"
-              style={{ fontFamily: "'Hind Siliguri', sans-serif" }}
-            >
-              যোগাযোগ
-            </h3>
-            <div className="space-y-4">
-              {[
-                { emoji: '📍', text: 'মিরপুর, ঢাকা-১২১৬' },
-                { emoji: '📞', text: '01700-000000' },
-                { emoji: '📧', text: 'info@mistisopno.com' },
-                { emoji: '🕐', text: 'সকাল ৯টা - রাত ১০টা' },
-              ].map((info) => (
-                <div key={info.text} className="flex items-center gap-3">
-                  <span>{info.emoji}</span>
-                  <span
-                    className="text-gray-400 text-sm"
-                    style={{ fontFamily: "'Hind Siliguri', sans-serif" }}
-                  >
-                    {info.text}
-                  </span>
-                </div>
-              ))}
-            </div>
+            <ul className="flex flex-col gap-2 text-xs text-gray-300">
+              <li>📍 হাট বলি বাড়ি, কুমিল্লা</li>
+              <li>📞 +880 1764-411168</li>
+              <li>💬 WhatsApp: +880 1764-411168</li>
+              <li>⏰ Always Open — ২৪/৭</li>
+            </ul>
           </div>
         </div>
-      </div>
-
-      {/* Bottom */}
-      <div className="border-t border-gray-800 py-5 px-4">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center">
-          <p
-            className="text-gray-500 text-sm"
-            style={{ fontFamily: "'Hind Siliguri', sans-serif" }}
-          >
-            © ২০২৪ মিষ্টি স্বপ্ন। সর্বস্বত্ব সংরক্ষিত।
-          </p>
-          <div
-            className="flex items-center gap-2 text-gray-500 text-sm"
-            style={{ fontFamily: "'Hind Siliguri', sans-serif" }}
-          >
-            <span>❤️ দিয়ে তৈরি</span>
-            <span>|</span>
-            <span>ঢাকা, বাংলাদেশ 🇧🇩</span>
-          </div>
+        <div className="pt-6 text-center text-xs text-gray-500 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p>© ২০২৬ বেক আর্ট স্টাইল (Bake Art Style)। সর্বস্বত্ব সংরক্ষিত।</p>
+          <a href="tel:+8801764411168" className="hover:text-white transition-colors">
+            হাট বলি বাড়ি, কুমিল্লা — +880 1764-411168
+          </a>
         </div>
       </div>
     </footer>
