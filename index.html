@@ -1,16 +1,1340 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="bn" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>বেক আর্ট স্টাইল | Bake Art Style - Homemade Cake & Delivery</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Hind+Siliguri:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-  </head>
-  <body class="bg-rose-50/30 text-gray-800 overflow-x-hidden">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="বেক আর্ট স্টাইল - কুমিল্লার সেরা হোমমেড কেক ও ডেলিভারি সার্ভিস। ১০০% তাজা ও খাঁটি উপাদানে তৈরি কেক।">
+  <title>বেক আর্ট স্টাইল | Bake Art Style - Homemade Cake & Delivery</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Hind+Siliguri:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @custom-variant dark (&:where(.dark, .dark *));
+  </style>
+  <style>
+    body {
+      font-family: 'Hind Siliguri', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .font-script { font-family: 'Dancing Script', cursive; }
+    .font-bengali { font-family: 'Hind Siliguri', sans-serif; }
+
+    /* Tailwind browser v4 does not read the old JS config, so custom motions live here. */
+    @keyframes float { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-14px) rotate(5deg); } }
+    @keyframes pulseGlow { 0%,100% { box-shadow: 0 0 8px rgba(244,63,94,0.5); } 50% { box-shadow: 0 0 20px rgba(244,63,94,0.9); } }
+    @keyframes gradientShift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+    @keyframes bounceSoft { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    @keyframes fadeInDown { 0% { opacity: 0; transform: translateY(-10px); } 100% { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+    @keyframes scaleIn { 0% { opacity: 0; transform: scale(0.93); } 100% { opacity: 1; transform: scale(1); } }
+    @keyframes slideRight { 0% { opacity: 0; transform: translateX(40px); } 100% { opacity: 1; transform: translateX(0); } }
+    @keyframes confettiFall { 0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+    @keyframes heroPhotoIn { 0% { opacity: 0; transform: scale(1.08); filter: blur(8px); } 100% { opacity: 1; transform: scale(1); filter: blur(0); } }
+    @keyframes progressFill { 0% { width: 0%; } 100% { width: 100%; } }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .animate-float-delay { animation: float 6s ease-in-out 3s infinite; }
+    .animate-pulse-glow { animation: pulseGlow 2s ease infinite; }
+    .animate-gradient-shift { animation: gradientShift 15s ease infinite; }
+    .animate-bounce-soft { animation: bounceSoft 2s ease-in-out infinite; }
+    .animate-fade-in-down { animation: fadeInDown 0.3s ease-out; }
+    .animate-fade-in-up { animation: fadeInUp 0.35s ease-out; }
+    .animate-scale-in { animation: scaleIn 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .animate-slide-right { animation: slideRight 0.3s ease-out; }
+    .best-seller-ring { background: conic-gradient(from 210deg, #fb7185, #ec4899, #a855f7, #fb7185); }
+    .best-seller-photo { animation: heroPhotoIn 0.65s ease both; }
+    .best-progress { animation: progressFill 3.8s linear both; }
+    /* ======================== Base Utilities ======================== */
+    .skeleton {
+      background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+      background-size: 200% 100%;
+      animation: skeletonLoad 1.5s infinite;
+    }
+    .dark .skeleton {
+      background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+      background-size: 200% 100%;
+    }
+    @keyframes skeletonLoad {
+      0% { background-position: 200% 0; } 100% { background-position: -200% 0; }
+    }
+    .line-clamp-1 {
+      overflow: hidden; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical;
+    }
+    .line-clamp-2 {
+      overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .btn-shine { position: relative; overflow: hidden; }
+    .btn-shine::after {
+      content: ''; position: absolute; top: -50%; left: -60%; width: 20%; height: 200%;
+      opacity: 0; transform: rotate(30deg);
+      background: linear-gradient(to right, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.4) 77%, rgba(255,255,255,0.5) 92%, rgba(255,255,255,0) 100%);
+    }
+    .btn-shine:hover::after { opacity: 1; left: 130%; transition: left 0.7s ease-out, opacity 0.15s; }
+    .image-zoom img { transition: transform 0.5s ease; }
+    .image-zoom:hover img { transform: scale(1.1); }
+
+    /* ======================== DARK MODE OVERRIDES ======================== */
+    .dark .bg-rose-50\\/30 { background-color: rgba(30,41,59,0.6); }
+    .dark .bg-rose-50\\/40 { background-color: rgba(30,41,59,0.7); }
+    .dark .dark-glass { background: rgba(30, 41, 59, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(148,163,184,0.15); }
+
+    /* ======================== Subtle glow for stats ======================== */
+    @keyframes subtlePulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(244,63,94,0); }
+      50% { box-shadow: 0 0 0 8px rgba(244,63,94,0.08); }
+    }
+    .stat-glow { animation: subtlePulse 3s infinite; }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-rose-50/30 via-pink-50/40 to-purple-50/20 transition-colors duration-500 overflow-x-hidden">
+  <div id="root"></div>
+  <script type="module">
+    import React, { useState, useEffect, useRef, useCallback } from 'https://esm.sh/react@18.2.0';
+    import ReactDOM from 'https://esm.sh/react-dom@18.2.0/client';
+    const e = React.createElement;
+
+    // ──── HELPERS ────
+    const LS = (k, d) => { try { const v = localStorage.getItem('bas_' + k); return v ? JSON.parse(v) : d; } catch { return d; } };
+    const SS = (k, v) => { try { localStorage.setItem('bas_' + k, JSON.stringify(v)); } catch {} };
+    const toBn = (num) => String(num).replace(/[0-9]/g, w => ({'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'})[w]);
+    const WA_NUMBER = '8801764411168';
+    const waLink = (msg) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+
+    // ──── DATA ────
+    const DEFAULT_PRODUCTS = [
+      { id:1, name:"রাজকীয় চকোলেট ট্রাফেল কেক", category:"birthday", price:1250, rating:5.0, reviews:128, tag:"বেস্টসেলার", weight:"১ কেজি", image:"https://images.pexels.com/photos/10249461/pexels-photo-10249461.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200", description:"বেলজিয়ান চকোলেট ও প্রিমিয়াম কোকোর এক স্বর্গীয় মিশ্রণ।", approved:true },
+      { id:2, name:"স্বর্গীয় স্ট্রবেরি ফ্লোরাল ডিলাইট", category:"birthday", price:1400, rating:4.9, reviews:95, tag:"তাজা ফল", weight:"১ কেজি", image:"https://images.pexels.com/photos/12927172/pexels-photo-12927172.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200", description:"তাজা স্ট্রবেরি ও ভ্যানিলা স্পঞ্জের অপূর্ব যুগলবন্দী।", approved:true },
+      { id:3, name:"এলিগ্যান্ট হোয়াইট ওয়েডিং কেক", category:"wedding", price:4500, rating:5.0, reviews:42, tag:"প্রিমিয়াম", weight:"৩ কেজি", image:"https://images.pexels.com/photos/30233124/pexels-photo-30233124.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200", description:"খাঁটি মাখনের ফ্রস্টিং ও এডিবল ফ্লাওয়ার দিয়ে সজ্জিত।", approved:true },
+      { id:4, name:"সিগনেচার মিক্সড বেরি চিজকেক", category:"pastry", price:350, rating:4.8, reviews:210, tag:"শেফ স্পেশাল", weight:"১ পিস", image:"https://images.pexels.com/photos/19498995/pexels-photo-19498995.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200", description:"ক্রিমি চিজ ও তাজা ব্লুবেরি-রাস্পবেরির মেলবন্ধন।", approved:true },
+      { id:5, name:"গোল্ডেন গ্লেজড ভ্যানিলা ডোনাট", category:"pastry", price:120, rating:4.7, reviews:340, tag:"জনপ্রিয়", weight:"১ পিস", image:"https://images.pexels.com/photos/13914951/pexels-photo-13914951.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200", description:"নরম ও তুলতুলে ডোনাট, ভ্যানিলা গ্লেজ ও স্প্রিংকলস।", approved:true },
+      { id:6, name:"কাস্টমাইজড গোল্ডেন সেলিব্রেশন", category:"custom", price:2500, rating:4.9, reviews:76, tag:"এক্সক্লুসিভ", weight:"২ কেজি", image:"https://images.pexels.com/photos/19651268/pexels-photo-19651268.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200", description:"মনের মতো কাস্টমাইজড ডিজাইনের গোল্ডেন ফিনাইল কেক।", approved:true },
+      { id:7, name:"ক্লাসিক ব্ল্যাক ফরেস্ট ডিলাইট", category:"birthday", price:1100, rating:4.8, reviews:180, tag:"সবার প্রিয়", weight:"১ কেজি", image:"https://images.pexels.com/photos/8478055/pexels-photo-8478055.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200", description:"চকোলেট লেয়ার, চেরি ফিলিং ও হুইপড ক্রিম।", approved:true },
+      { id:8, name:"প্রিমিয়াম ভেলভেট রোমান্স কেক", category:"wedding", price:3200, rating:5.0, reviews:58, tag:"লাক্সারি", weight:"২ কেজি", image:"https://images.pexels.com/photos/3983580/pexels-photo-3983580.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200", description:"রেড ভেলভেট স্পঞ্জ ও সিল্কি ক্রিম চিজ ফ্রস্টিং।", approved:true },
+    ];
+
+    const DEFAULT_SETTINGS = {
+      promoEnabled: true, promoCode: 'BAKE20', promoPercent: 20,
+      promoTitle: 'প্রথম অর্ডারে ২০% ছাড়!', deliveryFee: 80,
+      deliveryEstimate: '২-৪ ঘণ্টা', paymentMethods: { cod: true, bkash: true, nagad: true },
+      adminPin: '1234',
+    };
+
+    // ──── IMAGE WITH LAZY LOAD + SKELETON ────
+    function ImageWithLoader({ src, alt, className }) {
+      const [loaded, setLoaded] = useState(false);
+      const [error, setError] = useState(false);
+      const fallback = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" fill="%23fce7f3"><rect width="400" height="300"/><text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="40">🎂</text></svg>');
+      return e('div', { className: 'relative w-full h-full overflow-hidden' },
+        !loaded && !error && e('div', { className: 'absolute inset-0 skeleton rounded-xl' }),
+        e('img', {
+          src: error ? fallback : src,
+          alt,
+          className: `${className} ${loaded || error ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`,
+          onLoad: () => setLoaded(true),
+          onError: () => { setError(true); setLoaded(true); },
+          loading: 'lazy',
+        })
+      );
+    }
+
+    // ──── DARK MODE TOGGLE ────
+    function DarkModeToggle({ dark, setDark }) {
+      return e('button', {
+        onClick: () => setDark(!dark),
+        className: 'relative w-12 h-7 rounded-full transition-all duration-300 flex items-center px-1 ' +
+          (dark ? 'bg-slate-600' : 'bg-amber-300'),
+        title: dark ? 'Light Mode' : 'Dark Mode',
+      },
+        e('span', { className: 'text-xs absolute left-1' }, '🌙'),
+        e('span', { className: 'text-xs absolute right-1' }, '☀️'),
+        e('span', {
+          className: 'relative z-10 w-5 h-5 rounded-full bg-white shadow-md transition-transform duration-300 transform ' +
+            (dark ? 'translate-x-5' : 'translate-x-0')
+        })
+      );
+    }
+
+    // ──── CONFETTI ────
+    function Confetti() {
+      const colors = ['#f43f5e','#fbbf24','#34d399','#60a5fa','#a78bfa','#fb923c','#ec4899'];
+      return e('div', { className: 'fixed inset-0 z-[90] pointer-events-none overflow-hidden' },
+        ...Array(50).fill(0).map((_, i) => e('div', {
+          key: i,
+          className: 'absolute w-2.5 h-2.5 rounded-sm',
+          style: {
+            left: `${Math.random() * 100}%`,
+            top: `-${Math.random() * 20}px`,
+            backgroundColor: colors[Math.floor(Math.random() * colors.length)],
+            animation: `confettiFall ${2 + Math.random() * 3}s linear ${Math.random() * 2}s forwards`,
+            transform: `rotate(${Math.random() * 360}deg)`,
+          }
+        }))
+      );
+    }
+
+    // ──── TOAST ────
+    function Toasts({ toasts }) {
+      return e('div', { className: 'fixed bottom-5 right-5 z-[80] flex flex-col gap-2 max-w-sm w-full px-4 pointer-events-none' },
+        toasts.map(t => e('div', {
+          key: t.id,
+          className: 'pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-2xl shadow-xl text-white text-xs font-medium animate-fade-in-up ' +
+            (t.type === 'error' ? 'bg-rose-600' : 'bg-gray-900 border-l-4 border-rose-500')
+        },
+          e('span', { className: 'text-base' }, t.type === 'error' ? '⚠️' : '🧁'),
+          e('p', { className: 'flex-1' }, t.message)
+        ))
+      );
+    }
+
+    // ──── NAVBAR ────
+    function Navbar({ cartCount, onOpenCart, user, onOpenAuth, onLogout, wishlistCount, onOpenWishlist, dark, setDark }) {
+      const [scrolled, setScrolled] = useState(false);
+      const [mobileOpen, setMobileOpen] = useState(false);
+
+      useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 20);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+      }, []);
+
+      const links = [
+        ['হোম', '#hero'], ['মেন্যু', '#menu'], ['কাস্টম', '#custom-cake'],
+        ['আমাদের', '#about'], ['রিভিউ', '#reviews'], ['যোগাযোগ', '#contact'],
+      ];
+
+      return e('nav', {
+        className: 'fixed top-0 left-0 right-0 z-50 transition-all duration-300 ' +
+          (scrolled ? 'bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl shadow-lg py-2' : 'bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm py-3')
+      },
+        e('div', { className: 'max-w-7xl mx-auto px-4 sm:px-6' },
+          e('div', { className: 'flex items-center justify-between' },
+            e('a', { href: '#hero', className: 'flex items-center gap-2.5 group flex-shrink-0' },
+              e('div', { className: 'w-10 h-10 rounded-full bg-gradient-to-tr from-rose-500 to-pink-600 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform' }, e('span', { className: 'text-lg' }, '🎂')),
+              e('div', null,
+                e('h1', { className: 'text-base sm:text-lg font-bold bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent leading-tight' }, 'বেক আর্ট স্টাইল'),
+                e('p', { className: 'text-[10px] font-script text-purple-600 dark:text-purple-400 -mt-0.5 font-bold' }, 'Bake Art Style')
+              )
+            ),
+            // Desktop links
+            e('div', { className: 'hidden xl:flex items-center gap-1' },
+              ...links.map(([n, h]) => e('a', {
+                key: n,
+                href: h,
+                className: 'px-3 py-1.5 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-slate-800 transition-all'
+              }, n))
+            ),
+            // Actions
+            e('div', { className: 'flex items-center gap-1.5 sm:gap-2' },
+              e(DarkModeToggle, { dark, setDark }),
+              // Wishlist
+              e('button', {
+                onClick: onOpenWishlist,
+                className: 'relative p-2 rounded-full hover:bg-pink-50 dark:hover:bg-slate-800 text-pink-500 transition-colors',
+                title: 'ইচ্ছেতালিকা'
+              },
+                e('svg', { xmlns: 'http://www.w3.org/2000/svg', className: 'h-5 w-5', fill: 'currentColor', viewBox: '0 0 24 24' },
+                  e('path', { d: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' })
+                ),
+                wishlistCount > 0 && e('span', { className: 'absolute -top-0.5 -right-0.5 bg-pink-600 text-white text-[10px] w-4.5 h-4.5 rounded-full flex items-center justify-center font-bold' }, toBn(wishlistCount))
+              ),
+              // Auth
+              user
+                ? e('button', { onClick: onLogout, className: 'hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-rose-600 dark:hover:text-rose-400 transition-colors' }, e('span', null, user.avatar || '👤'), e('span', { className: 'max-w-[70px] truncate hidden md:inline' }, user.name), '| লগআউট')
+                : e('button', { onClick: onOpenAuth, className: 'hidden sm:flex items-center gap-1 px-3 py-1.5 rounded-full border border-gray-200 dark:border-slate-700 text-xs font-medium text-gray-600 dark:text-gray-400 hover:border-rose-300 hover:text-rose-600 transition-all' }, '👤 লগইন'),
+              // Cart
+              e('button', {
+                onClick: onOpenCart,
+                className: 'relative p-2 rounded-full bg-rose-50 dark:bg-slate-800 hover:bg-rose-100 dark:hover:bg-slate-700 text-rose-600 transition-colors'
+              },
+                e('svg', { xmlns: 'http://www.w3.org/2000/svg', className: 'h-5 w-5', fill: 'none', viewBox: '0 0 24 24', stroke: 'currentColor', strokeWidth: 2 },
+                  e('path', { strokeLinecap: 'round', strokeLinejoin: 'round', d: 'M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z' })
+                ),
+                cartCount > 0 && e('span', { className: 'absolute -top-1 -right-1 bg-rose-600 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold animate-pulse-glow' }, toBn(cartCount))
+              ),
+              e('a', { href: '#menu', className: 'hidden md:inline-flex px-4 py-2 rounded-full bg-gradient-to-r from-rose-500 to-pink-600 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all btn-shine' }, 'অর্ডার করুন'),
+              // Mobile hamburger
+              e('button', { onClick: () => setMobileOpen(!mobileOpen), className: 'xl:hidden p-2 text-gray-700 dark:text-gray-300 hover:text-rose-600 transition-colors' },
+                e('svg', { xmlns: 'http://www.w3.org/2000/svg', className: 'h-6 w-6', fill: 'none', viewBox: '0 0 24 24', stroke: 'currentColor', strokeWidth: 2 },
+                  e('path', { strokeLinecap: 'round', strokeLinejoin: 'round', d: mobileOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16' })
+                )
+              )
+            )
+          )
+        ),
+        mobileOpen && e('div', { className: 'xl:hidden bg-white dark:bg-slate-900 border-t border-rose-50 dark:border-slate-800 px-4 pt-2 pb-5 shadow-xl animate-fade-in-down' },
+          e('div', { className: 'flex flex-col gap-1' },
+            ...links.map(([n, h]) => e('a', { key: n, href: h, onClick: () => setMobileOpen(false), className: 'block px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-slate-800 transition-colors' }, n)),
+            !user && e('button', { onClick: () => { setMobileOpen(false); onOpenAuth(); }, className: 'mt-2 w-full py-2.5 rounded-full border-2 border-rose-200 dark:border-slate-600 text-rose-600 font-bold text-sm' }, '👤 লগইন / রেজিস্টার'),
+            user && e('div', { className: 'mt-2 flex items-center justify-between px-3 py-2 rounded-xl bg-rose-50 dark:bg-slate-800' },
+              e('div', { className: 'flex items-center gap-2' }, e('span', null, user.avatar || '👤'), e('span', { className: 'text-xs font-bold dark:text-white' }, user.name)),
+              e('button', { onClick: onLogout, className: 'text-xs text-rose-600 font-bold' }, 'লগআউট')
+            ),
+          )
+        )
+      );
+    }
+
+    // ──── HERO ────
+    function Hero({ onAdminTrigger, bestProducts = [] }) {
+      const [tapCount, setTapCount] = useState(0);
+      const [activeBest, setActiveBest] = useState(0);
+      const timerRef = useRef(null);
+      const featuredProducts = bestProducts.length ? bestProducts : DEFAULT_PRODUCTS.filter(p => p.approved).slice(0, 4);
+      const activeProduct = featuredProducts[activeBest % featuredProducts.length] || DEFAULT_PRODUCTS[0];
+
+      const handleBadgeTap = () => {
+        const next = tapCount + 1;
+        setTapCount(next);
+        clearTimeout(timerRef.current);
+        if (next >= 7) { setTapCount(0); onAdminTrigger(); return; }
+        timerRef.current = setTimeout(() => setTapCount(0), 3000);
+      };
+
+      useEffect(() => () => clearTimeout(timerRef.current), []);
+
+      useEffect(() => {
+        if (featuredProducts.length < 2) return undefined;
+        const id = setInterval(() => setActiveBest(i => (i + 1) % featuredProducts.length), 3800);
+        return () => clearInterval(id);
+      }, [featuredProducts.length]);
+
+      return e('section', { id: 'hero', className: 'relative min-h-screen flex items-center justify-center pt-20 pb-16 overflow-hidden' },
+        // Background
+        e('div', { className: 'absolute inset-0 bg-gradient-to-br from-rose-50 via-pink-50 to-purple-50 dark:from-slate-950 dark:via-slate-900 dark:to-rose-950 bg-[length:200%_200%] animate-gradient-shift' }),
+        e('div', { className: 'absolute top-20 left-10 w-72 h-72 bg-rose-300/25 dark:bg-rose-900/20 rounded-full blur-3xl pointer-events-none' }),
+        e('div', { className: 'absolute bottom-10 right-10 w-96 h-96 bg-purple-300/20 dark:bg-purple-900/15 rounded-full blur-3xl pointer-events-none' }),
+        // Floating emojis
+        e('div', { className: 'absolute top-1/4 left-8 sm:left-16 text-3xl sm:text-4xl animate-float opacity-60 select-none pointer-events-none' }, '🎂'),
+        e('div', { className: 'absolute top-1/3 right-10 sm:right-20 text-3xl sm:text-4xl animate-float-delay opacity-60 select-none pointer-events-none' }, '🧁'),
+        e('div', { className: 'absolute bottom-1/4 left-12 sm:left-24 text-2xl animate-float-delay opacity-50 select-none pointer-events-none' }, '✨'),
+
+        e('div', { className: 'max-w-7xl mx-auto px-4 sm:px-6 relative z-10 w-full' },
+          e('div', { className: 'grid lg:grid-cols-2 gap-12 items-center' },
+            e('div', { className: 'text-center lg:text-left' },
+              // Hidden admin trigger
+              e('button', {
+                onClick: handleBadgeTap,
+                className: 'inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border border-rose-100 dark:border-slate-700 shadow-sm mb-6 cursor-default select-none active:scale-95 transition-transform'
+              },
+                e('span', { className: 'w-2 h-2 rounded-full bg-rose-500 animate-pulse' }),
+                e('span', { className: 'text-xs sm:text-sm font-semibold text-rose-600 dark:text-rose-400' }, 'হোমমেড কেক, ডেলিভারি সার্ভিস'),
+                tapCount >= 3 && e('span', { className: 'ml-1 text-[9px] text-rose-300 dark:text-rose-700' }, `${toBn(tapCount)}/৭`)
+              ),
+              e('h1', { className: 'text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white leading-tight' },
+                'বেক ', e('span', { className: 'bg-gradient-to-r from-rose-500 via-pink-600 to-purple-600 bg-clip-text text-transparent' }, 'আর্ট'), ' স্টাইল'
+              ),
+              e('p', { className: 'text-2xl sm:text-3xl font-script text-purple-700 dark:text-purple-300 mt-2 font-bold tracking-wide' }, 'Bake Art Style'),
+              e('div', { className: 'flex items-center justify-center lg:justify-start gap-3 my-5' },
+                e('span', { className: 'h-px w-12 bg-rose-200 dark:bg-rose-800' }),
+                e('span', { className: 'text-lg text-rose-300' }, '❦'),
+                e('span', { className: 'h-px w-12 bg-rose-200 dark:bg-rose-800' })
+              ),
+              e('p', { className: 'text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-xl mx-auto lg:mx-0 leading-relaxed mb-8' },
+                '"হোমমেড কেক, ডেলিভারি সার্ভিস, অর্ডার করতে ইনবক্স করুন" — কুমিল্লার হাট বলি বাড়িতে অবস্থিত আমাদের বেকারিতে পাবেন ১০০% তাজা ও খাঁটি হোমমেড কেক!'
+              ),
+              e('div', { className: 'flex flex-wrap items-center justify-center lg:justify-start gap-4' },
+                e('a', { href: '#menu', className: 'px-8 py-3.5 rounded-full bg-gradient-to-r from-rose-500 to-pink-600 text-white font-bold shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 btn-shine' }, 'মেন্যু দেখুন'),
+                e('a', { href: waLink('আমি কেক অর্ডার করতে চাই। দয়া করে মেন্যু পাঠান।'), target: '_blank', rel: 'noopener', className: 'px-8 py-3.5 rounded-full bg-green-500 hover:bg-green-600 text-white font-bold shadow-lg transition-all inline-flex items-center gap-2' }, '💬 WhatsApp এ অর্ডার')
+              ),
+              // Stats
+              e('div', { className: 'grid grid-cols-4 gap-3 sm:gap-6 mt-12 pt-8 border-t border-rose-100/80 dark:border-slate-700/50' },
+                [{v:'১৩৫+',l:'ফলোয়ার্স'},{v:'৭৭+',l:'পোস্ট'},{v:'১০০%',l:'হোমমেড'},{v:'২৪/৭',l:'অর্ডার'}].map(s =>
+                  e('div', { key: s.l, className: 'text-center stat-glow rounded-xl p-2' },
+                    e('h4', { className: 'text-xl sm:text-2xl font-bold text-gray-900 dark:text-white' }, s.v),
+                    e('p', { className: 'text-[10px] sm:text-xs text-gray-500 dark:text-gray-400' }, s.l)
+                  )
+                )
+              )
+            ),
+            // Best-selling cake spotlight. The ring stays still while images change softly.
+            e('div', { className: 'relative flex flex-col items-center justify-center' },
+              e('div', { className: 'relative w-72 sm:w-96 lg:w-full max-w-md aspect-square rounded-full p-3 best-seller-ring shadow-2xl shadow-rose-500/20' },
+                e('div', { className: 'absolute inset-3 rounded-full overflow-hidden border-4 border-white dark:border-slate-800 shadow-inner bg-rose-50 dark:bg-slate-800' },
+                  e(ImageWithLoader, {
+                    key: activeProduct.id,
+                    src: activeProduct.image,
+                    alt: activeProduct.name,
+                    className: 'w-full h-full object-cover best-seller-photo'
+                  })
+                )
+              ),
+              e('div', { className: 'mt-5 w-full max-w-md text-center px-3' },
+                e('span', { className: 'inline-flex items-center gap-1 px-3 py-1 rounded-full bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-300 text-[11px] font-bold' }, '🔥 বেস্ট সেলিং'),
+                e('h3', { className: 'mt-3 text-lg sm:text-xl font-bold text-gray-900 dark:text-white line-clamp-1' }, activeProduct.name),
+                e('p', { className: 'text-sm text-gray-500 dark:text-gray-400' }, `${activeProduct.weight} • ${toBn(activeProduct.price)} ৳ • ★ ${toBn(activeProduct.rating)}`),
+                e('div', { className: 'mt-4 flex items-center justify-center gap-2' },
+                  ...featuredProducts.map((p, i) => e('button', {
+                    key: p.id,
+                    onClick: () => setActiveBest(i),
+                    className: `relative h-2 rounded-full overflow-hidden transition-all ${i === activeBest % featuredProducts.length ? 'w-9 bg-rose-200 dark:bg-rose-900' : 'w-2 bg-rose-200/70 dark:bg-slate-700 hover:bg-rose-300'}`,
+                    'aria-label': `${p.name} দেখুন`
+                  },
+                    i === activeBest % featuredProducts.length && e('span', { className: 'absolute inset-y-0 left-0 bg-rose-500 best-progress rounded-full' })
+                  ))
+                )
+              )
+            )
+          )
+        )
+      );
+    }
+
+    // ──── SPECIAL OFFERS ────
+    function SpecialOffers({ settings }) {
+      const [timeLeft, setTimeLeft] = useState(() => {
+        const now = new Date();
+        const midnight = new Date(now); midnight.setHours(23, 59, 59, 999);
+        const diff = Math.floor((midnight - now) / 1000);
+        return {
+          h: Math.max(0, Math.floor(diff / 3600)),
+          m: Math.max(0, Math.floor((diff % 3600) / 60)),
+          s: Math.max(0, diff % 60)
+        };
+      });
+      const [copied, setCopied] = useState(false);
+
+      useEffect(() => {
+        const t = setInterval(() => setTimeLeft(p => {
+          let { h, m, s } = p; s--;
+          if (s < 0) { s = 59; m--; }
+          if (m < 0) { m = 59; h--; }
+          if (h < 0) return { h: 0, m: 0, s: 0 };
+          return { h, m, s };
+        }), 1000);
+        return () => clearInterval(t);
+      }, []);
+
+      if (!settings.promoEnabled) return null;
+
+      return e('section', { className: 'py-10 bg-white dark:bg-slate-900' },
+        e('div', { className: 'max-w-7xl mx-auto px-4 sm:px-6' },
+          e('div', { className: 'bg-gradient-to-r from-rose-500 via-pink-600 to-purple-600 rounded-3xl p-8 sm:p-10 text-white shadow-xl shadow-rose-500/25 relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8' },
+            e('div', { className: 'absolute -right-10 -bottom-10 w-60 h-60 bg-white/10 rounded-full blur-xl pointer-events-none' }),
+            e('div', { className: 'absolute -left-5 -top-5 w-32 h-32 bg-white/5 rounded-full blur-xl pointer-events-none' }),
+            e('div', { className: 'relative z-10 text-center lg:text-left' },
+              e('span', { className: 'bg-white/20 backdrop-blur px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider' }, '⚡ সীমিত সময়ের অফার'),
+              e('h2', { className: 'text-2xl sm:text-3xl font-bold mt-3 mb-2' }, settings.promoTitle),
+              e('div', { className: 'mt-5 inline-flex items-center gap-2 bg-black/20 backdrop-blur p-1.5 rounded-xl border border-white/20' },
+                e('span', { className: 'font-mono font-bold text-lg px-4 tracking-widest text-amber-300 select-all' }, settings.promoCode),
+                e('button', {
+                  onClick: () => { navigator.clipboard.writeText(settings.promoCode).catch(() => {}); setCopied(true); setTimeout(() => setCopied(false), 2000); },
+                  className: 'bg-white text-rose-600 px-4 py-2 rounded-lg text-xs font-bold hover:bg-rose-50 transition-colors'
+                }, copied ? '✓ কপি হয়েছে!' : 'কোড কপি করুন')
+              )
+            ),
+            e('div', { className: 'relative z-10 flex flex-col items-center bg-black/20 backdrop-blur p-5 rounded-2xl border border-white/10 min-w-[220px]' },
+              e('p', { className: 'text-xs font-bold text-rose-200 mb-3 uppercase tracking-wider' }, '⏳ শেষ হতে বাকি'),
+              e('div', { className: 'flex items-center gap-2' },
+                [{ v: timeLeft.h, l: 'ঘণ্টা' }, { v: timeLeft.m, l: 'মিনিট' }, { v: timeLeft.s, l: 'সেকেন্ড' }].map((x, i, arr) => [
+                  i > 0 && e('span', { key: 'sep' + i, className: 'text-xl font-bold -mt-5' }, ':'),
+                  e('div', { key: x.l, className: 'text-center' },
+                    e('div', { className: 'w-14 h-14 rounded-xl bg-white text-rose-600 flex items-center justify-center font-bold text-xl shadow-inner' }, toBn(x.v)),
+                    e('span', { className: 'text-[10px] text-rose-100 mt-1 block' }, x.l)
+                  )
+                ]).flat().filter(Boolean)
+              )
+            )
+          )
+        )
+      );
+    }
+
+    // ──── MENU SECTION ────
+    function MenuSection({ products, onAddToCart, wishlist, toggleWishlist, onQuickView }) {
+      const [tab, setTab] = useState('all');
+      const [q, setQ] = useState('');
+      const [sortBy, setSortBy] = useState('default');
+      const [loading, setLoading] = useState(true);
+
+      useEffect(() => {
+        setLoading(true);
+        const t = setTimeout(() => setLoading(false), 600);
+        return () => clearTimeout(t);
+      }, [tab, sortBy]);
+
+      const cats = [
+        { id: 'all', n: 'সব আইটেম', icon: '🍽️' },
+        { id: 'birthday', n: 'জন্মদিনের কেক', icon: '🎂' },
+        { id: 'wedding', n: 'ওয়েডিং কেক', icon: '💒' },
+        { id: 'pastry', n: 'পেস্ট্রি ও ডোনাট', icon: '🥐' },
+        { id: 'custom', n: 'কাস্টমাইজড', icon: '✨' },
+      ];
+
+      let filtered = products
+        .filter(p => p.approved)
+        .filter(p => tab === 'all' || p.category === tab)
+        .filter(p => p.name.toLowerCase().includes(q.toLowerCase()) || p.description.toLowerCase().includes(q.toLowerCase()));
+
+      if (sortBy === 'price-low') filtered.sort((a, b) => a.price - b.price);
+      if (sortBy === 'price-high') filtered.sort((a, b) => b.price - a.price);
+      if (sortBy === 'rating') filtered.sort((a, b) => b.rating - a.rating);
+
+      return e('section', { id: 'menu', className: 'py-20 bg-white dark:bg-slate-900' },
+        e('div', { className: 'max-w-7xl mx-auto px-4 sm:px-6' },
+          e('div', { className: 'text-center max-w-3xl mx-auto mb-10' },
+            e('span', { className: 'text-rose-500 font-script text-xl font-bold' }, 'Fresh & Delicious'),
+            e('h2', { className: 'text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mt-1' }, 'আমাদের সিগনেচার মেন্যু'),
+            e('div', { className: 'w-24 h-1 bg-gradient-to-r from-rose-500 to-pink-500 mx-auto mt-3 rounded-full' })
+          ),
+          // Filter bar
+          e('div', { className: 'sticky top-16 z-30 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl p-3 rounded-2xl shadow-lg border border-gray-100 dark:border-slate-700 mb-8' },
+            e('div', { className: 'flex flex-wrap justify-center gap-1.5 mb-3' },
+              ...cats.map(c => e('button', {
+                key: c.id,
+                onClick: () => setTab(c.id),
+                className: `flex items-center gap-1 px-3 py-2 rounded-xl text-xs font-bold transition-all ${tab === c.id ? 'bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-md' : 'text-gray-600 dark:text-gray-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-slate-800'}`
+              }, e('span', null, c.icon), c.n))
+            ),
+            e('div', { className: 'flex gap-2' },
+              e('div', { className: 'relative flex-1' },
+                e('input', {
+                  type: 'text', placeholder: '🔍 কেক খুঁজুন...', value: q,
+                  onChange: ev => setQ(ev.target.value),
+                  className: 'w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-slate-600 focus:border-rose-500 outline-none text-xs bg-gray-50/50 dark:bg-slate-800 dark:text-white transition-colors'
+                }),
+                e('span', { className: 'absolute left-3 top-2.5 text-gray-400 text-sm' }, '🔍')
+              ),
+              e('select', {
+                value: sortBy,
+                onChange: ev => setSortBy(ev.target.value),
+                className: 'px-3 py-2.5 rounded-xl border border-gray-200 dark:border-slate-600 text-xs bg-gray-50/50 dark:bg-slate-800 dark:text-white outline-none focus:border-rose-500 w-32 sm:w-44'
+              },
+                e('option', { value: 'default' }, 'সর্টিং'),
+                e('option', { value: 'price-low' }, 'দাম: কম → বেশি'),
+                e('option', { value: 'price-high' }, 'দাম: বেশি → কম'),
+                e('option', { value: 'rating' }, 'জনপ্রিয়তা')
+              )
+            )
+          ),
+          // Grid
+          loading
+            ? e('div', { className: 'grid sm:grid-cols-2 lg:grid-cols-4 gap-6' },
+              ...Array(4).fill(0).map((_, i) => e('div', { key: i, className: 'bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-slate-700 shadow-sm p-4 flex flex-col gap-3' },
+                e('div', { className: 'skeleton h-48 rounded-xl w-full' }),
+                e('div', { className: 'skeleton h-4 w-3/4 rounded' }),
+                e('div', { className: 'skeleton h-3 w-1/2 rounded' }),
+                e('div', { className: 'flex justify-between mt-2' },
+                  e('div', { className: 'skeleton h-6 w-1/4 rounded' }),
+                  e('div', { className: 'skeleton h-8 w-8 rounded-full' })
+                )
+              ))
+            )
+            : filtered.length === 0
+            ? e('div', { className: 'text-center py-16' }, e('p', { className: 'text-5xl mb-4' }, '🔍'), e('p', { className: 'text-gray-400 dark:text-gray-500 font-medium' }, 'কোনো আইটেম পাওয়া যায়নি।'))
+            : e('div', { className: 'grid sm:grid-cols-2 lg:grid-cols-4 gap-6' },
+              ...filtered.map(p => e('div', {
+                key: p.id,
+                className: 'group bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col'
+              },
+                // Image section
+                e('div', { className: 'relative aspect-[4/3] overflow-hidden bg-rose-50 dark:bg-slate-700 image-zoom' },
+                  e(ImageWithLoader, { src: p.image, alt: p.name, className: 'w-full h-full object-cover' }),
+                  e('div', { className: 'absolute top-3 left-3 flex flex-col gap-1' },
+                    p.tag && e('span', { className: `px-2 py-0.5 rounded-md backdrop-blur text-[10px] font-bold shadow-sm ${p.tag === 'বেস্টসেলার' ? 'bg-gradient-to-r from-rose-500 to-pink-600 text-white' : 'bg-white/90 dark:bg-slate-800/90 text-rose-600'}` }, p.tag),
+                    e('span', { className: 'px-2 py-0.5 rounded-md bg-gray-900/80 text-[10px] text-white w-max' }, p.weight)
+                  ),
+                  // Hover overlay
+                  e('div', { className: 'absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3' },
+                    e('button', {
+                      onClick: () => onQuickView(p),
+                      className: 'w-11 h-11 rounded-full bg-white flex items-center justify-center text-base hover:bg-rose-500 hover:text-white transition-all hover:scale-110 shadow-lg'
+                    }, '👁'),
+                    e('button', {
+                      onClick: () => toggleWishlist(p.id),
+                      className: `w-11 h-11 rounded-full flex items-center justify-center text-base hover:scale-110 shadow-lg transition-all ${wishlist.includes(p.id) ? 'bg-rose-500 text-white' : 'bg-white text-gray-800 hover:bg-rose-500 hover:text-white'}`
+                    }, '♥')
+                  )
+                ),
+                // Content
+                e('div', { className: 'p-4 flex flex-col flex-grow' },
+                  e('div', { className: 'flex items-center gap-1 mb-1' },
+                    e('span', { className: 'text-amber-400 text-xs' }, '★'),
+                    e('span', { className: 'text-[10px] font-bold text-gray-700 dark:text-gray-300' }, toBn(p.rating)),
+                    e('span', { className: 'text-[10px] text-gray-400 dark:text-gray-500' }, `(${toBn(p.reviews)})`)
+                  ),
+                  e('h3', { className: 'font-bold text-sm text-gray-900 dark:text-white group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors line-clamp-1' }, p.name),
+                  e('p', { className: 'text-[11px] text-gray-500 dark:text-gray-400 mt-1 line-clamp-2 flex-grow leading-relaxed' }, p.description),
+                  e('div', { className: 'flex items-center justify-between mt-3 pt-3 border-t border-gray-50 dark:border-slate-700' },
+                    e('div', null,
+                      e('span', { className: 'text-[10px] text-gray-400 dark:text-gray-500 block' }, 'মূল্য'),
+                      e('span', { className: 'text-lg font-bold text-rose-600' }, `${toBn(p.price)} ৳`)
+                    ),
+                    e('button', {
+                      onClick: () => onAddToCart(p),
+                      className: 'p-2.5 rounded-xl bg-rose-50 dark:bg-slate-700 hover:bg-rose-500 text-rose-600 hover:text-white transition-all hover:scale-110'
+                    },
+                      e('svg', { xmlns: 'http://www.w3.org/2000/svg', className: 'h-5 w-5', fill: 'none', viewBox: '0 0 24 24', stroke: 'currentColor', strokeWidth: 2 },
+                        e('path', { strokeLinecap: 'round', strokeLinejoin: 'round', d: 'M12 4v16m8-8H4' })
+                      )
+                    )
+                  )
+                )
+              ))
+            )
+        )
+      );
+    }
+
+    // ──── QUICK VIEW MODAL ────
+    function QuickViewModal({ product, isOpen, onClose, onAddToCart, wishlist, toggleWishlist }) {
+      const [qty, setQty] = useState(1);
+      const [imgLoaded, setImgLoaded] = useState(false);
+
+      useEffect(() => { if (isOpen) { setQty(1); setImgLoaded(false); } }, [isOpen]);
+
+      if (!isOpen || !product) return null;
+
+      return e('div', { className: 'fixed inset-0 z-[65] flex items-center justify-center p-4' },
+        e('div', { className: 'fixed inset-0 bg-black/70 backdrop-blur-sm', onClick: onClose }),
+        e('div', { className: 'relative bg-white dark:bg-slate-800 w-full max-w-3xl max-h-[90vh] rounded-3xl shadow-2xl overflow-hidden animate-scale-in flex flex-col' },
+          e('button', {
+            onClick: onClose,
+            className: 'absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/90 dark:bg-slate-700 flex items-center justify-center text-lg hover:bg-rose-500 hover:text-white transition-all shadow-lg'
+          }, '✕'),
+          e('div', { className: 'grid md:grid-cols-2 overflow-y-auto' },
+            e('div', { className: 'relative aspect-square bg-rose-50 dark:bg-slate-700' },
+              !imgLoaded && e('div', { className: 'absolute inset-0 skeleton' }),
+              e('img', {
+                src: product.image, alt: product.name,
+                className: `w-full h-full object-cover ${imgLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`,
+                onLoad: () => setImgLoaded(true),
+                onError: (ev) => { ev.target.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" fill="%23fce7f3"><rect width="400" height="300"/><text x="200" y="160" text-anchor="middle" font-size="60">🎂</text></svg>'); setImgLoaded(true); }
+              })
+            ),
+            e('div', { className: 'p-6 md:p-8 flex flex-col' },
+              e('span', { className: 'text-xs font-bold text-rose-500 uppercase tracking-wider' },
+                { birthday: 'জন্মদিনের কেক', wedding: 'ওয়েডিং কেক', pastry: 'পেস্ট্রি', custom: 'কাস্টম' }[product.category] || product.category
+              ),
+              e('h2', { className: 'text-2xl font-bold text-gray-900 dark:text-white mt-1' }, product.name),
+              e('div', { className: 'flex items-center gap-2 my-3' },
+                e('span', { className: 'text-amber-400' }, '★'.repeat(Math.floor(product.rating)) + (product.rating % 1 >= 0.5 ? '½' : '')),
+                e('span', { className: 'text-sm text-gray-500 dark:text-gray-400' }, `${toBn(product.rating)} (${toBn(product.reviews)} রিভিউ)`)
+              ),
+              e('p', { className: 'text-3xl font-bold text-rose-600 mb-4' }, `${toBn(product.price)} ৳`),
+              e('p', { className: 'text-gray-600 dark:text-gray-300 text-sm mb-6 leading-relaxed' }, product.description),
+              e('div', { className: 'flex items-center gap-4 mb-6' },
+                e('span', { className: 'text-sm font-bold text-gray-900 dark:text-white' }, 'পরিমাণ:'),
+                e('div', { className: 'flex items-center gap-2 bg-gray-100 dark:bg-slate-700 rounded-lg p-1' },
+                  e('button', { onClick: () => setQty(Math.max(1, qty - 1)), className: 'w-8 h-8 rounded-lg bg-white dark:bg-slate-600 font-bold' }, '-'),
+                  e('span', { className: 'w-10 text-center font-bold dark:text-white' }, toBn(qty)),
+                  e('button', { onClick: () => setQty(qty + 1), className: 'w-8 h-8 rounded-lg bg-white dark:bg-slate-600 font-bold' }, '+')
+                )
+              ),
+              e('div', { className: 'flex gap-3 mt-auto flex-wrap' },
+                e('button', {
+                  onClick: () => { Array(qty).fill(0).forEach(() => onAddToCart(product)); onClose(); },
+                  className: 'flex-1 min-w-[140px] py-3 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-bold rounded-xl hover:shadow-lg transition-all btn-shine'
+                }, `🛒 যোগ করুন (${toBn(qty * product.price)}৳)`),
+                e('button', {
+                  onClick: () => toggleWishlist(product.id),
+                  className: `px-5 py-3 rounded-xl font-bold border-2 transition-all ${wishlist.includes(product.id) ? 'border-rose-500 bg-rose-50 dark:bg-slate-700 text-rose-600' : 'border-gray-200 dark:border-slate-600 text-gray-600 dark:text-gray-400 hover:border-rose-300'}`
+                }, wishlist.includes(product.id) ? '♥ সেভ হয়েছে' : '♡ ইচ্ছেতালিকা'),
+                e('a', {
+                  href: waLink(`আমি "${product.name}" অর্ডার করতে চাই (${toBn(product.price)}৳)`),
+                  target: '_blank', rel: 'noopener',
+                  className: 'flex-1 min-w-[140px] py-3 bg-green-500 text-white font-bold rounded-xl text-center hover:bg-green-600 transition-all'
+                }, '💬 WhatsApp')
+              )
+            )
+          )
+        )
+      );
+    }
+
+    // ──── CUSTOM CAKE ────
+    function CustomCake({ onAddCustomCake }) {
+      const flavors = [
+        { id: 'vanilla', name: 'ভ্যানিলা ডিলাইট', ppk: 800, emoji: '🍦' },
+        { id: 'chocolate', name: 'বেলজিয়ান চকোলেট', ppk: 1000, emoji: '🍫' },
+        { id: 'blackforest', name: 'ব্ল্যাক ফরেস্ট', ppk: 900, emoji: '🍒' },
+        { id: 'redvelvet', name: 'রেড ভেলভেট', ppk: 1100, emoji: '❤️' }
+      ];
+      const weights = [
+        { id: '1', name: '১ কেজি', m: 1 },
+        { id: '1.5', name: '১.৫ কেজি', m: 1.5 },
+        { id: '2', name: '২ কেজি', m: 2 },
+        { id: '3', name: '৩ কেজি', m: 3 }
+      ];
+      const [fl, setFl] = useState(flavors[0]);
+      const [wt, setWt] = useState(weights[0]);
+      const [msg, setMsg] = useState('');
+      const total = Math.round(fl.ppk * wt.m);
+
+      return e('section', { id: 'custom-cake', className: 'py-20 bg-rose-50/40 dark:bg-slate-900/50' },
+        e('div', { className: 'max-w-7xl mx-auto px-4 sm:px-6' },
+          e('div', { className: 'text-center max-w-3xl mx-auto mb-12' },
+            e('span', { className: 'text-rose-500 font-script text-xl font-bold' }, 'Be the Chef'),
+            e('h2', { className: 'text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mt-1' }, 'আপনার স্বপ্নের কেক ডিজাইন করুন'),
+            e('div', { className: 'w-24 h-1 bg-gradient-to-r from-rose-500 to-pink-500 mx-auto mt-3 rounded-full' })
+          ),
+          e('div', { className: 'grid lg:grid-cols-12 gap-8 items-start' },
+            e('div', { className: 'lg:col-span-7 bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-rose-100 dark:border-slate-700 flex flex-col gap-6' },
+              e('div', null,
+                e('label', { className: 'text-sm font-bold text-gray-900 dark:text-white block mb-3' }, '১. ফ্লেভার নির্বাচন করুন'),
+                e('div', { className: 'grid sm:grid-cols-2 gap-2' },
+                  ...flavors.map(f => e('button', {
+                    key: f.id,
+                    onClick: () => setFl(f),
+                    className: `p-4 rounded-xl border text-left transition-all flex justify-between items-center ${fl.id === f.id ? 'border-rose-500 bg-rose-50/50 dark:bg-slate-700 ring-2 ring-rose-100 dark:ring-rose-900' : 'border-gray-200 dark:border-slate-600 hover:border-rose-200 dark:hover:border-slate-500'}`
+                  },
+                    e('div', null,
+                      e('p', { className: 'font-bold text-sm dark:text-white' }, `${f.emoji} ${f.name}`),
+                      e('p', { className: 'text-[10px] text-gray-500 dark:text-gray-400' }, `${toBn(f.ppk)} ৳/কেজি`)
+                    ),
+                    fl.id === f.id && e('span', { className: 'w-6 h-6 rounded-full bg-rose-500 text-white flex items-center justify-center text-xs font-bold' }, '✓')
+                  ))
+                )
+              ),
+              e('div', null,
+                e('label', { className: 'text-sm font-bold text-gray-900 dark:text-white block mb-3' }, '২. ওজন নির্বাচন'),
+                e('div', { className: 'grid grid-cols-4 gap-2' },
+                  ...weights.map(w => e('button', {
+                    key: w.id,
+                    onClick: () => setWt(w),
+                    className: `p-3 rounded-xl border text-center transition-all ${wt.id === w.id ? 'border-rose-500 bg-rose-50/50 dark:bg-slate-700 ring-2 ring-rose-100 dark:ring-rose-900' : 'border-gray-200 dark:border-slate-600'}`
+                  },
+                    e('p', { className: 'font-bold text-sm dark:text-white' }, w.name)
+                  ))
+                )
+              ),
+              e('div', null,
+                e('label', { className: 'text-sm font-bold text-gray-900 dark:text-white block mb-2' }, '৩. কেকের ওপর কী লিখবেন?'),
+                e('input', {
+                  type: 'text', placeholder: 'যেমন: শুভ জন্মদিন!', value: msg,
+                  onChange: ev => setMsg(ev.target.value),
+                  className: 'w-full p-3 rounded-xl border border-gray-200 dark:border-slate-600 focus:border-rose-500 outline-none text-sm bg-white dark:bg-slate-700 dark:text-white transition-colors'
+                })
+              )
+            ),
+            e('div', { className: 'lg:col-span-5 bg-gradient-to-br from-gray-900 to-rose-950 text-white p-8 rounded-3xl shadow-2xl sticky top-24' },
+              e('h3', { className: 'text-lg font-bold border-b border-white/10 pb-4 mb-6' }, '📋 অর্ডার সারসংক্ষেপ'),
+              e('div', { className: 'flex flex-col gap-3 mb-6 text-sm' },
+                e('div', { className: 'flex justify-between' }, e('span', { className: 'text-gray-400' }, 'ফ্লেভার:'), e('span', { className: 'font-bold' }, `${fl.emoji} ${fl.name}`)),
+                e('div', { className: 'flex justify-between' }, e('span', { className: 'text-gray-400' }, 'ওজন:'), e('span', { className: 'font-bold' }, wt.name)),
+                msg && e('div', { className: 'bg-white/5 p-3 rounded-lg border border-white/10 text-xs' }, e('span', { className: 'text-rose-300' }, 'লেখা: '), `"${msg}"`)
+              ),
+              e('div', { className: 'bg-white/10 p-5 rounded-2xl border border-white/10 mb-6 flex justify-between items-center' },
+                e('div', null,
+                  e('span', { className: 'text-xs text-gray-300 block' }, 'মোট মূল্য'),
+                  e('span', { className: 'text-3xl font-bold text-rose-400' }, `${toBn(total)} ৳`)
+                ),
+                e('span', { className: 'text-[10px] bg-rose-500/30 text-rose-300 px-3 py-1 rounded-full border border-rose-500/30' }, 'ভ্যাট অন্তর্ভুক্ত')
+              ),
+              e('button', {
+                onClick: () => {
+                  onAddCustomCake({
+                    id: 'c-' + Date.now(),
+                    name: `কাস্টম: ${fl.name}`,
+                    price: total,
+                    image: 'https://images.pexels.com/photos/19651268/pexels-photo-19651268.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200',
+                    weight: wt.name,
+                    tag: 'কাস্টম'
+                  });
+                  setMsg('');
+                },
+                className: 'w-full py-4 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all btn-shine flex items-center justify-center gap-2'
+              }, '🛒 কাস্টম কেক কার্টে যোগ করুন')
+            )
+          )
+        )
+      );
+    }
+
+    // ──── ABOUT SECTION ────
+    function AboutSection() {
+      const feats = ['১০০% খাঁটি ও তাজা উপাদান', 'স্বাস্থ্যসম্মত ও হালাল পরিবেশ', 'দক্ষ হোম বেকার', 'দ্রুত ডোরস্টেপ ডেলিভারি'];
+      return e('section', { id: 'about', className: 'py-20 bg-white dark:bg-slate-900' },
+        e('div', { className: 'max-w-7xl mx-auto px-4 sm:px-6' },
+          e('div', { className: 'grid lg:grid-cols-2 gap-12 items-center' },
+            e('div', { className: 'grid grid-cols-2 gap-4 relative' },
+              e('div', { className: 'flex flex-col gap-4 mt-8' },
+                e('div', { className: 'rounded-2xl overflow-hidden shadow-md aspect-square image-zoom' }, e('img', { src: 'https://images.pexels.com/photos/3983571/pexels-photo-3983571.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200', alt: 'Baking', className: 'w-full h-full object-cover', loading: 'lazy' })),
+                e('div', { className: 'rounded-2xl overflow-hidden shadow-md aspect-[4/3] image-zoom' }, e('img', { src: 'https://images.pexels.com/photos/19498995/pexels-photo-19498995.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200', alt: 'Pastry', className: 'w-full h-full object-cover', loading: 'lazy' }))
+              ),
+              e('div', { className: 'flex flex-col gap-4' },
+                e('div', { className: 'rounded-2xl overflow-hidden shadow-md aspect-[4/3] image-zoom' }, e('img', { src: 'https://images.pexels.com/photos/3983580/pexels-photo-3983580.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200', alt: 'Velvet Cake', className: 'w-full h-full object-cover', loading: 'lazy' })),
+                e('div', { className: 'rounded-2xl overflow-hidden shadow-md aspect-square image-zoom' }, e('img', { src: 'https://images.pexels.com/photos/8478055/pexels-photo-8478055.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200', alt: 'Black Forest', className: 'w-full h-full object-cover', loading: 'lazy' }))
+              ),
+              e('div', { className: 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/95 dark:bg-slate-800/95 backdrop-blur p-5 rounded-full shadow-2xl text-center w-32 h-32 flex flex-col items-center justify-center border-2 border-rose-100 dark:border-slate-600' },
+                e('span', { className: 'text-xl font-bold text-rose-600' }, '২৪/৭'),
+                e('span', { className: 'text-[10px] font-bold text-gray-800 dark:text-white' }, 'সেবায় নিবেদিত')
+              )
+            ),
+            e('div', null,
+              e('span', { className: 'text-rose-500 font-script text-xl font-bold' }, 'Our Story'),
+              e('h2', { className: 'text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mt-1 mb-5' }, 'আমাদের গল্প ও অঙ্গীকার'),
+              e('p', { className: 'text-gray-600 dark:text-gray-300 leading-relaxed mb-7' }, 'কুমিল্লার হাট বলি বাড়িতে অবস্থিত "বেক আর্ট স্টাইল" — তাজা উপাদান ও পরিচ্ছন্ন পরিবেশে তৈরি প্রতিটি কেক। ডেলিভারি সার্ভিসে পৌঁছে দিই স্বাদ আপনার দরজায়। পরিবার ও বন্ধুদের প্রতিটি বিশেষ মুহূর্তকে আরও মধুর করে তুলতে আমরা অঙ্গীকারবদ্ধ।'),
+              e('div', { className: 'flex flex-col gap-4' },
+                ...feats.map((f, i) => e('div', { key: i, className: 'flex gap-3 items-center' },
+                  e('span', { className: 'w-6 h-6 rounded-full bg-rose-100 dark:bg-rose-900/50 text-rose-600 flex items-center justify-center text-xs flex-shrink-0' }, '✓'),
+                  e('span', { className: 'font-bold text-sm text-gray-900 dark:text-white' }, f)
+                ))
+              )
+            )
+          )
+        )
+      );
+    }
+
+    // ──── TESTIMONIALS ────
+    function Testimonials() {
+      const revs = [
+        { name: 'সাদিয়া আফরিন', role: 'রেগুলার কাস্টমার', comment: 'কেকের স্বাদ অসাধারণ! সবাই প্রশংসা করেছে। ডেলিভারিও সময়মতো পেয়েছি। ধন্যবাদ বেক আর্ট স্টাইল!', rating: 5, avatar: '👩‍💼' },
+        { name: 'তানভীর আহমেদ', role: 'কর্পোরেট ক্লায়েন্ট', comment: 'কাস্টমাইজড কেক যেমন চেয়েছিলাম ঠিক তেমন হয়েছে। স্পঞ্জ সফট, ফ্রস্টিং পারফেক্ট। হাইলি রেকমেন্ডেড!', rating: 5, avatar: '👨‍💼' },
+        { name: 'নুসরাত জাহান', role: 'ভোজনরসিক', comment: 'মিক্সড বেরি চিজকেক জীবনের সেরা! মুখে দিলেই মিলিয়ে যায়। প্যাকেজিংও প্রিমিয়াম। এখন উইকেন্ডেই অর্ডার দিই।', rating: 5, avatar: '🧕' }
+      ];
+      return e('section', { id: 'reviews', className: 'py-20 bg-rose-50/40 dark:bg-slate-900/50' },
+        e('div', { className: 'max-w-7xl mx-auto px-4 sm:px-6' },
+          e('div', { className: 'text-center mb-12' },
+            e('span', { className: 'text-rose-500 font-script text-xl font-bold' }, 'Sweet Words'),
+            e('h2', { className: 'text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mt-1' }, 'গ্রাহকদের মিষ্টি অনুভূতি'),
+            e('div', { className: 'w-24 h-1 bg-gradient-to-r from-rose-500 to-pink-500 mx-auto mt-3 rounded-full' })
+          ),
+          e('div', { className: 'grid md:grid-cols-3 gap-6' },
+            ...revs.map((r, i) => e('div', {
+              key: i,
+              className: 'bg-white dark:bg-slate-800 p-7 rounded-3xl shadow-sm border border-rose-50 dark:border-slate-700 hover:shadow-lg transition-shadow relative group'
+            },
+              e('span', { className: 'absolute top-5 right-5 text-5xl text-rose-100 dark:text-rose-900/30 font-serif select-none pointer-events-none group-hover:text-rose-200 dark:group-hover:text-rose-800/30 transition-colors' }, '"'),
+              e('div', { className: 'flex gap-1 text-amber-400 mb-3 text-sm' }, ...Array(r.rating).fill(0).map((_, j) => e('span', { key: j }, '★'))),
+              e('p', { className: 'text-gray-600 dark:text-gray-300 text-xs leading-relaxed italic relative z-10' }, `"${r.comment}"`),
+              e('div', { className: 'flex items-center gap-3 mt-5 pt-3 border-t border-gray-50 dark:border-slate-700' },
+                e('div', { className: 'w-9 h-9 rounded-full bg-rose-100 dark:bg-rose-900/50 flex items-center justify-center text-lg' }, r.avatar),
+                e('div', null, e('h4', { className: 'font-bold text-xs dark:text-white' }, r.name), e('p', { className: 'text-[10px] text-rose-600 dark:text-rose-400' }, r.role))
+              )
+            ))
+          )
+        )
+      );
+    }
+
+    // ──── CONTACT ────
+    function ContactSection({ showToast }) {
+      const [f, setF] = useState({ name: '', phone: '', message: '' });
+      const [sent, setSent] = useState(false);
+      const submit = (ev) => {
+        ev.preventDefault();
+        if (!f.name || !f.phone) { showToast('নাম ও ফোন নম্বর দিন!', 'error'); return; }
+        window.open(waLink(`নতুন বার্তা — ${f.name} (${f.phone}): ${f.message || 'কোনো বার্তা নেই'}`), '_blank');
+        setSent(true);
+        showToast('WhatsApp এ বার্তা পাঠানো হচ্ছে!');
+        setTimeout(() => { setSent(false); setF({ name: '', phone: '', message: '' }); }, 4000);
+      };
+      return e('section', { id: 'contact', className: 'py-20 bg-white dark:bg-slate-900' },
+        e('div', { className: 'max-w-7xl mx-auto px-4 sm:px-6' },
+          e('div', { className: 'grid lg:grid-cols-12 gap-10 items-center' },
+            e('div', { className: 'lg:col-span-5' },
+              e('span', { className: 'text-rose-500 font-script text-xl font-bold' }, 'Get in Touch'),
+              e('h2', { className: 'text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mt-1 mb-6' }, 'আমাদের সাথে যোগাযোগ'),
+              e('div', { className: 'flex flex-col gap-5' },
+                e('div', { className: 'flex gap-3 items-start' }, e('span', { className: 'w-9 h-9 rounded-full bg-rose-50 dark:bg-slate-800 flex items-center justify-center flex-shrink-0' }, '📍'), e('div', null, e('h4', { className: 'font-bold text-sm dark:text-white' }, 'ঠিকানা'), e('p', { className: 'text-xs text-gray-500 dark:text-gray-400' }, 'হাট বলি বাড়ি, কুমিল্লা, বাংলাদেশ'))),
+                e('div', { className: 'flex gap-3 items-start' }, e('span', { className: 'w-9 h-9 rounded-full bg-rose-50 dark:bg-slate-800 flex items-center justify-center' }, '📞'), e('div', null, e('h4', { className: 'font-bold text-sm dark:text-white' }, 'হটলাইন'), e('a', { href: 'tel:+8801764411168', className: 'text-xs text-gray-500 dark:text-gray-400 font-mono hover:text-rose-600 transition-colors' }, '+880 1764-411168'))),
+                e('div', { className: 'flex gap-3 items-start' }, e('span', { className: 'w-9 h-9 rounded-full bg-rose-50 dark:bg-slate-800 flex items-center justify-center' }, '💬'), e('div', null, e('h4', { className: 'font-bold text-sm dark:text-white' }, 'WhatsApp'), e('a', { href: 'https://wa.me/8801764411168', target: '_blank', rel: 'noopener', className: 'text-xs text-gray-500 dark:text-gray-400 font-mono hover:text-rose-600 transition-colors' }, '+880 1764-411168'))),
+                e('div', { className: 'flex gap-3 items-start' }, e('span', { className: 'w-9 h-9 rounded-full bg-rose-50 dark:bg-slate-800 flex items-center justify-center' }, '⏰'), e('div', null, e('h4', { className: 'font-bold text-sm dark:text-white' }, 'সেবার সময়'), e('p', { className: 'text-xs text-gray-500 dark:text-gray-400' }, 'সর্বদা উন্মুক্ত — ২৪/৭ অর্ডার গ্রহণ')))
+              )
+            ),
+            e('div', { className: 'lg:col-span-7 bg-rose-50/40 dark:bg-slate-800 p-7 rounded-3xl border border-rose-100 dark:border-slate-700' },
+              sent
+                ? e('div', { className: 'text-center py-12 animate-fade-in-up' },
+                  e('div', { className: 'text-5xl mb-4' }, '✅'),
+                  e('h3', { className: 'text-xl font-bold dark:text-white' }, 'ধন্যবাদ!'),
+                  e('p', { className: 'text-sm text-gray-500 dark:text-gray-400 mt-2' }, 'আপনার বার্তা WhatsApp এ পাঠানো হচ্ছে। দ্রুত উত্তর দেওয়া হবে।')
+                )
+                : e('form', { onSubmit: submit, className: 'flex flex-col gap-4' },
+                  e('h3', { className: 'text-base font-bold dark:text-white' }, '💬 সরাসরি WhatsApp এ বার্তা পাঠান'),
+                  e('input', { type: 'text', required: true, placeholder: 'আপনার নাম *', value: f.name, onChange: ev => setF({ ...f, name: ev.target.value }), className: 'w-full p-3 rounded-xl border border-gray-200 dark:border-slate-600 focus:border-rose-500 outline-none text-sm bg-white dark:bg-slate-700 dark:text-white transition-colors' }),
+                  e('input', { type: 'tel', required: true, placeholder: 'ফোন নম্বর *', value: f.phone, onChange: ev => setF({ ...f, phone: ev.target.value }), className: 'w-full p-3 rounded-xl border border-gray-200 dark:border-slate-600 focus:border-rose-500 outline-none text-sm bg-white dark:bg-slate-700 dark:text-white transition-colors' }),
+                  e('textarea', { rows: 3, placeholder: 'আপনার বার্তা বা জিজ্ঞাসা...', value: f.message, onChange: ev => setF({ ...f, message: ev.target.value }), className: 'w-full p-3 rounded-xl border border-gray-200 dark:border-slate-600 focus:border-rose-500 outline-none text-sm bg-white dark:bg-slate-700 dark:text-white resize-none transition-colors' }),
+                  e('button', { type: 'submit', className: 'w-full py-3.5 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2' }, '💬 WhatsApp এ পাঠান')
+                )
+            )
+          )
+        )
+      );
+    }
+
+    // ──── WHATSAPP FLOAT ────
+    function WhatsAppFloat() {
+      const [open, setOpen] = useState(false);
+      return e('div', { className: 'fixed bottom-5 left-5 z-50' },
+        open && e('div', { className: 'bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-gray-100 dark:border-slate-700 w-72 mb-3 animate-scale-in overflow-hidden' },
+          e('div', { className: 'bg-green-500 px-4 py-3 text-white flex items-center justify-between' },
+            e('div', null, e('h4', { className: 'font-bold text-sm' }, 'বেক আর্ট স্টাইল'), e('p', { className: 'text-[10px] text-green-100' }, 'কয়েক মিনিটে উত্তর দিই ⚡')),
+            e('button', { onClick: () => setOpen(false), className: 'text-white/80 hover:text-white' }, '✕')
+          ),
+          e('div', { className: 'p-4' },
+            e('div', { className: 'bg-green-50 dark:bg-slate-700 p-3 rounded-xl rounded-tl-none text-xs text-gray-700 dark:text-gray-200 mb-3' },
+              'আসসালামু আলাইকুম! 👋 কেক অর্ডার করতে বা যেকোনো তথ্যের জন্য মেসেজ করুন!',
+              e('span', { className: 'text-[9px] text-gray-400 dark:text-gray-400 block mt-1' }, 'বেক আর্ট স্টাইল')
+            ),
+            e('a', { href: waLink('আসসালামু আলাইকুম! আমি কেক সম্পর্কে জানতে চাই।'), target: '_blank', rel: 'noopener', className: 'w-full flex items-center justify-center gap-2 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl text-xs transition-colors' }, '💬 চ্যাট শুরু করুন')
+          )
+        ),
+        e('button', {
+          onClick: () => setOpen(!open),
+          className: `w-14 h-14 rounded-full shadow-xl flex items-center justify-center text-2xl transition-all hover:scale-110 ${open ? 'bg-gray-700 text-white' : 'bg-green-500 text-white animate-bounce-soft'}`
+        },
+          e('svg', { xmlns: 'http://www.w3.org/2000/svg', className: 'h-7 w-7', fill: 'currentColor', viewBox: '0 0 24 24' }, e('path', { d: 'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z' }))
+        )
+      );
+    }
+
+    // ──── SCROLL TO TOP ────
+    function ScrollTop() {
+      const [visible, setVisible] = useState(false);
+      useEffect(() => {
+        const onScroll = () => setVisible(window.scrollY > 700);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+        return () => window.removeEventListener('scroll', onScroll);
+      }, []);
+      if (!visible) return null;
+      return e('button', {
+        onClick: () => window.scrollTo({ top: 0, behavior: 'smooth' }),
+        className: 'fixed bottom-5 right-5 z-50 w-12 h-12 rounded-full bg-white dark:bg-slate-800 text-rose-600 shadow-xl border border-rose-100 dark:border-slate-700 hover:bg-rose-500 hover:text-white transition-all animate-scale-in',
+        'aria-label': 'উপরে যান'
+      }, '↑');
+    }
+
+    // ──── CART DRAWER ────
+    function CartDrawer({ isOpen, onClose, cart, onUpdateQty, onRemove, onCheckout, promoCode, setPromoCode, discount, onApplyPromo, showToast, settings }) {
+      if (!isOpen) return null;
+      const sub = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+      const disc = Math.round((sub * discount) / 100);
+      const total = sub - disc;
+
+      const applyPromo = (ev) => {
+        ev.preventDefault();
+        if (promoCode.trim().toUpperCase() === settings.promoCode) {
+          onApplyPromo(settings.promoPercent);
+          showToast(`${toBn(settings.promoPercent)}% ছাড় যুক্ত হলো!`);
+        } else {
+          showToast('অকার্যকর প্রোমো কোড!', 'error');
+        }
+      };
+
+      return e('div', { className: 'fixed inset-0 z-[55]' },
+        e('div', { className: 'absolute inset-0 bg-black/50 backdrop-blur-sm', onClick: onClose }),
+        e('div', { className: 'absolute inset-y-0 right-0 max-w-full flex' },
+          e('div', { className: 'w-screen max-w-md bg-white dark:bg-slate-800 shadow-2xl flex flex-col animate-slide-right' },
+            e('div', { className: 'p-5 bg-rose-50/50 dark:bg-slate-900/50 border-b border-rose-100 dark:border-slate-700 flex justify-between items-center' },
+              e('h2', { className: 'font-bold flex items-center gap-2 dark:text-white' }, '🛒 ', `শপিং কার্ট (${toBn(cart.length)})`),
+              e('button', { onClick: onClose, className: 'p-2 text-gray-400 hover:text-gray-600 dark:hover:text-white rounded-full hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors' }, '✕')
+            ),
+            e('div', { className: 'flex-1 overflow-y-auto p-5 flex flex-col gap-3' },
+              cart.length === 0
+                ? e('div', { className: 'text-center py-16' }, e('p', { className: 'text-5xl mb-4' }, '🥮'), e('p', { className: 'font-bold text-gray-500 dark:text-gray-400' }, 'কার্ট খালি!'), e('a', { href: '#menu', onClick: onClose, className: 'inline-block mt-4 px-6 py-2 bg-rose-500 text-white rounded-xl text-sm font-bold hover:bg-rose-600 transition-colors' }, 'মেন্যু দেখুন'))
+                : cart.map(item => e('div', { key: item.id, className: 'flex gap-3 items-center pb-3 border-b border-gray-100 dark:border-slate-700 last:border-0' },
+                  e('img', { src: item.image, alt: item.name, className: 'w-14 h-14 object-cover rounded-xl flex-shrink-0', onError: (ev) => { ev.target.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" fill="%23fce7f3"><rect width="56" height="56"/><text x="28" y="32" text-anchor="middle" font-size="24">🎂</text></svg>'); } }),
+                  e('div', { className: 'flex-1 min-w-0' },
+                    e('h4', { className: 'font-bold text-xs truncate dark:text-white' }, item.name),
+                    e('p', { className: 'text-[10px] text-gray-500 dark:text-gray-400' }, item.weight || ''),
+                    e('p', { className: 'text-xs font-bold text-rose-600' }, `${toBn(item.price)} ৳`)
+                  ),
+                  e('div', { className: 'flex flex-col items-end gap-1.5' },
+                    e('button', { onClick: () => onRemove(item.id), className: 'text-[10px] text-gray-400 hover:text-rose-600 dark:hover:text-rose-400 transition-colors' }, '🗑️'),
+                    e('div', { className: 'flex items-center gap-1.5 bg-gray-50 dark:bg-slate-700 rounded-lg p-0.5 border dark:border-slate-600' },
+                      e('button', { onClick: () => onUpdateQty(item.id, item.quantity - 1), className: 'w-6 h-6 flex items-center justify-center text-xs font-bold rounded hover:bg-white dark:hover:bg-slate-600 transition-colors' }, '-'),
+                      e('span', { className: 'text-xs font-bold px-1 dark:text-white min-w-[16px] text-center' }, toBn(item.quantity)),
+                      e('button', { onClick: () => onUpdateQty(item.id, item.quantity + 1), className: 'w-6 h-6 flex items-center justify-center text-xs font-bold rounded hover:bg-white dark:hover:bg-slate-600 transition-colors' }, '+')
+                    )
+                  )
+                ))
+            ),
+            cart.length > 0 && e('div', { className: 'p-5 bg-gray-50 dark:bg-slate-900 border-t dark:border-slate-700 flex flex-col gap-3' },
+              settings.promoEnabled && e('form', { onSubmit: applyPromo, className: 'flex gap-2' },
+                e('input', { placeholder: 'প্রোমো কোড', value: promoCode, onChange: ev => setPromoCode(ev.target.value), className: 'flex-1 px-3 py-2 bg-white dark:bg-slate-700 rounded-xl border dark:border-slate-600 text-xs outline-none focus:border-rose-500 dark:text-white uppercase' }),
+                e('button', { type: 'submit', className: 'px-4 py-2 bg-gray-900 dark:bg-slate-600 text-white rounded-xl text-xs font-bold hover:bg-rose-600 dark:hover:bg-rose-600 transition-colors' }, 'প্রয়োগ')
+              ),
+              e('div', { className: 'flex flex-col gap-1 text-xs' },
+                e('div', { className: 'flex justify-between text-gray-600 dark:text-gray-400' }, e('span', null, 'সাবটোটাল:'), e('span', { className: 'font-bold text-gray-900 dark:text-white' }, `${toBn(sub)} ৳`)),
+                discount > 0 && e('div', { className: 'flex justify-between text-green-600' }, e('span', null, `ছাড় (${toBn(discount)}%):`), e('span', { className: 'font-bold' }, `- ${toBn(disc)} ৳`)),
+                e('div', { className: 'flex justify-between font-bold text-gray-900 dark:text-white pt-2 border-t dark:border-slate-700 mt-1 text-sm' }, e('span', null, 'সর্বমোট:'), e('span', { className: 'text-rose-600' }, `${toBn(total)} ৳`))
+              ),
+              e('button', { onClick: onCheckout, className: 'w-full py-3.5 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all btn-shine' }, '✅ চেকআউট করুন')
+            )
+          )
+        )
+      );
+    }
+
+    // ──── CHECKOUT MODAL ────
+    function CheckoutModal({ isOpen, onClose, cart, discount, onClearCart, showToast, settings }) {
+      const [step, setStep] = useState(1);
+      const [info, setInfo] = useState({ name: '', phone: '', address: '', date: '', time: 'সকাল ১০-দুপুর ১টা', payment: 'cod' });
+      const [orderId, setOrderId] = useState('');
+      const [showConfetti, setShowConfetti] = useState(false);
+      const sub = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+      const disc = Math.round((sub * discount) / 100);
+      const total = sub - disc + settings.deliveryFee;
+
+      useEffect(() => { if (!isOpen) { setStep(1); setShowConfetti(false); } }, [isOpen]);
+
+      if (!isOpen) return null;
+
+      const next = (ev) => {
+        ev.preventDefault();
+        if (step === 1) {
+          if (!info.name || !info.phone || !info.address || !info.date) { showToast('সকল তথ্য পূরণ করুন!', 'error'); return; }
+          setStep(2);
+        } else if (step === 2) {
+          const oid = 'BAS-' + Math.floor(10000 + Math.random() * 90000);
+          setOrderId(oid);
+          setStep(3);
+          setShowConfetti(true);
+          setTimeout(() => setShowConfetti(false), 5000);
+
+          const waMsg = `🎂 নতুন অর্ডার!\n\n📋 ID: ${oid}\n👤 নাম: ${info.name}\n📞 ফোন: ${info.phone}\n📍 ঠিকানা: ${info.address}\n📅 ডেলিভারি: ${info.date} (${info.time})\n💰 মোট: ${total}৳ (${info.payment === 'cod' ? 'ক্যাশ অন ডেলিভারি' : info.payment === 'bkash' ? 'বিকাশ' : 'নগদ'})\n\n🛒 আইটেম:\n${cart.map(c => `• ${c.name} x${c.quantity} = ${c.price * c.quantity}৳`).join('\n')}\n\n---\n🙏 ধন্যবাদ! বেক আর্ট স্টাইল`;
+          window.open(waLink(waMsg), '_blank');
+          onClearCart();
+        }
+      };
+
+      const pm = settings.paymentMethods;
+
+      return e('div', { className: 'fixed inset-0 z-[60] flex items-center justify-center p-4 overflow-y-auto' },
+        e('div', { className: 'fixed inset-0 bg-black/60 backdrop-blur-sm', onClick: step < 3 ? onClose : undefined }),
+        e('div', { className: 'relative bg-white dark:bg-slate-800 w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col my-4 animate-scale-in' },
+          showConfetti && e(Confetti),
+          e('div', { className: 'bg-gradient-to-r from-rose-500 to-pink-600 px-6 py-4 text-white flex justify-between items-center' },
+            e('div', null,
+              e('h3', { className: 'font-bold text-base' }, step === 3 ? '🎉 অর্ডার সম্পন্ন!' : 'নিরাপদ চেকআউট'),
+              e('p', { className: 'text-[10px] text-rose-100' }, step < 3 ? `ধাপ ${toBn(step)}/২` : 'ধন্যবাদ!')
+            ),
+            step < 3 && e('button', { onClick: onClose, className: 'text-white/80 hover:text-white text-lg transition-colors' }, '✕')
+          ),
+          e('div', { className: 'p-6 max-h-[70vh] overflow-y-auto' },
+            step === 1 && e('form', { onSubmit: next, className: 'flex flex-col gap-3' },
+              e('h4', { className: 'font-bold text-xs text-gray-900 dark:text-white border-b dark:border-slate-700 pb-2' }, '১. ডেলিভারি তথ্য'),
+              e('input', { type: 'text', required: true, placeholder: 'প্রাপকের নাম *', value: info.name, onChange: ev => setInfo({ ...info, name: ev.target.value }), className: 'p-2.5 rounded-xl border dark:border-slate-600 text-xs w-full bg-white dark:bg-slate-700 dark:text-white focus:border-rose-500 outline-none transition-colors' }),
+              e('input', { type: 'tel', required: true, placeholder: 'মোবাইল নম্বর *', value: info.phone, onChange: ev => setInfo({ ...info, phone: ev.target.value }), className: 'p-2.5 rounded-xl border dark:border-slate-600 text-xs bg-white dark:bg-slate-700 dark:text-white focus:border-rose-500 outline-none transition-colors' }),
+              e('textarea', { rows: 2, required: true, placeholder: 'সম্পূর্ণ ঠিকানা *', value: info.address, onChange: ev => setInfo({ ...info, address: ev.target.value }), className: 'p-2.5 rounded-xl border dark:border-slate-600 text-xs resize-none bg-white dark:bg-slate-700 dark:text-white focus:border-rose-500 outline-none transition-colors' }),
+              e('div', { className: 'grid grid-cols-2 gap-2' },
+                e('input', { type: 'date', required: true, value: info.date, onChange: ev => setInfo({ ...info, date: ev.target.value }), className: 'p-2.5 rounded-xl border dark:border-slate-600 text-xs bg-white dark:bg-slate-700 dark:text-white focus:border-rose-500 outline-none transition-colors' }),
+                e('select', { value: info.time, onChange: ev => setInfo({ ...info, time: ev.target.value }), className: 'p-2.5 rounded-xl border dark:border-slate-600 text-xs bg-white dark:bg-slate-700 dark:text-white focus:border-rose-500 outline-none transition-colors' },
+                  e('option', null, 'সকাল ১০-দুপুর ১টা'),
+                  e('option', null, 'দুপুর ২-বিকাল ৫টা'),
+                  e('option', null, 'সন্ধ্যা ৬-রাত ৯টা')
+                )
+              ),
+              e('div', { className: 'bg-rose-50 dark:bg-slate-700 p-3 rounded-xl flex justify-between text-xs' },
+                e('span', { className: 'dark:text-gray-300' }, `আনুমানিক ডেলিভারি: ${settings.deliveryEstimate}`),
+                e('span', { className: 'font-bold text-rose-600' }, `মোট: ${toBn(total)} ৳`)
+              ),
+              e('button', { type: 'submit', className: 'w-full py-3 bg-gray-900 hover:bg-rose-600 text-white font-bold rounded-xl text-xs mt-1 transition-all' }, 'পরবর্তী: পেমেন্ট →')
+            ),
+            step === 2 && e('form', { onSubmit: next, className: 'flex flex-col gap-4' },
+              e('h4', { className: 'font-bold text-xs text-gray-900 dark:text-white border-b dark:border-slate-700 pb-2' }, '২. পেমেন্ট মাধ্যম'),
+              e('div', { className: 'flex flex-col gap-2' },
+                pm.cod && e('label', { className: `p-3 rounded-xl border flex items-center gap-3 cursor-pointer transition-all ${info.payment === 'cod' ? 'border-rose-500 bg-rose-50 dark:bg-slate-700 ring-2 ring-rose-100 dark:ring-rose-900' : 'border-gray-200 dark:border-slate-600'}` },
+                  e('input', { type: 'radio', name: 'pm', checked: info.payment === 'cod', onChange: () => setInfo({ ...info, payment: 'cod' }), className: 'accent-rose-500' }),
+                  e('div', null, e('p', { className: 'font-bold text-sm dark:text-white' }, '💵 ক্যাশ অন ডেলিভারি'), e('p', { className: 'text-[10px] text-gray-500 dark:text-gray-400' }, 'ডেলিভারির সময় নগদ পেমেন্ট'))
+                ),
+                pm.bkash && e('label', { className: `p-3 rounded-xl border flex items-center gap-3 cursor-pointer transition-all ${info.payment === 'bkash' ? 'border-rose-500 bg-rose-50 dark:bg-slate-700 ring-2 ring-rose-100 dark:ring-rose-900' : 'border-gray-200 dark:border-slate-600'}` },
+                  e('input', { type: 'radio', name: 'pm', checked: info.payment === 'bkash', onChange: () => setInfo({ ...info, payment: 'bkash' }), className: 'accent-rose-500' }),
+                  e('div', null, e('p', { className: 'font-bold text-sm dark:text-white' }, '📱 বিকাশ (bKash)'), e('p', { className: 'text-[10px] text-gray-500 dark:text-gray-400' }, 'Send Money — অর্ডারের পর নম্বর পাঠানো হবে'))
+                ),
+                pm.nagad && e('label', { className: `p-3 rounded-xl border flex items-center gap-3 cursor-pointer transition-all ${info.payment === 'nagad' ? 'border-rose-500 bg-rose-50 dark:bg-slate-700 ring-2 ring-rose-100 dark:ring-rose-900' : 'border-gray-200 dark:border-slate-600'}` },
+                  e('input', { type: 'radio', name: 'pm', checked: info.payment === 'nagad', onChange: () => setInfo({ ...info, payment: 'nagad' }), className: 'accent-rose-500' }),
+                  e('div', null, e('p', { className: 'font-bold text-sm dark:text-white' }, '🟠 নগদ (Nagad)'), e('p', { className: 'text-[10px] text-gray-500 dark:text-gray-400' }, 'Send Money — অর্ডারের পর নম্বর পাঠানো হবে'))
+                )
+              ),
+              e('div', { className: 'bg-gray-50 dark:bg-slate-700 p-4 rounded-xl text-xs flex flex-col gap-1' },
+                e('div', { className: 'flex justify-between dark:text-gray-300' }, e('span', null, 'সাবটোটাল:'), e('span', { className: 'font-bold' }, `${toBn(sub)} ৳`)),
+                disc > 0 && e('div', { className: 'flex justify-between text-green-600' }, e('span', null, 'ছাড়:'), e('span', null, `- ${toBn(disc)} ৳`)),
+                e('div', { className: 'flex justify-between dark:text-gray-300' }, e('span', null, 'ডেলিভারি ফি:'), e('span', null, `${toBn(settings.deliveryFee)} ৳`)),
+                e('div', { className: 'flex justify-between font-bold text-sm pt-1 border-t dark:border-slate-600 mt-1 dark:text-white' }, e('span', null, 'সর্বমোট:'), e('span', { className: 'text-rose-600' }, `${toBn(total)} ৳`))
+              ),
+              e('div', { className: 'flex gap-2' },
+                e('button', { type: 'button', onClick: () => setStep(1), className: 'w-1/3 py-3 bg-gray-100 dark:bg-slate-700 rounded-xl text-xs font-bold dark:text-white hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors' }, '← পেছনে'),
+                e('button', { type: 'submit', className: 'w-2/3 py-3 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-bold rounded-xl btn-shine text-xs hover:shadow-lg transition-all' }, '✅ অর্ডার কনফার্ম + WhatsApp')
+              )
+            ),
+            step === 3 && e('div', { className: 'text-center py-6' },
+              e('div', { className: 'text-5xl mb-4 animate-bounce-soft' }, '🎉'),
+              e('h4', { className: 'text-xl font-bold dark:text-white' }, 'অর্ডার কনফার্ম হয়েছে!'),
+              e('p', { className: 'text-sm text-gray-500 dark:text-gray-400 mt-2' }, 'WhatsApp এ সম্পূর্ণ অর্ডার ডিটেইল পাঠানো হয়েছে।'),
+              e('div', { className: 'bg-gray-50 dark:bg-slate-700 p-5 rounded-2xl my-6 text-left text-xs space-y-2' },
+                e('div', { className: 'flex justify-between border-b dark:border-slate-600 pb-2' }, e('span', { className: 'font-bold text-gray-400 dark:text-gray-500' }, 'ট্র্যাকিং ID'), e('span', { className: 'font-mono font-bold bg-rose-100 dark:bg-rose-900/50 text-rose-700 dark:text-rose-400 px-2 py-0.5 rounded' }, orderId)),
+                e('p', { className: 'dark:text-gray-300' }, e('b', null, 'প্রাপক: '), info.name),
+                e('p', { className: 'dark:text-gray-300' }, e('b', null, 'ডেলিভারি: '), `${info.date} (${info.time})`),
+                e('p', { className: 'dark:text-gray-300' }, e('b', null, 'মোট: '), e('span', { className: 'text-rose-600 font-bold' }, `${toBn(total)} ৳`))
+              ),
+              e('button', { onClick: () => { onClose(); setStep(1); }, className: 'px-8 py-3 bg-gray-900 dark:bg-slate-700 text-white font-bold rounded-xl text-sm hover:bg-rose-600 transition-all' }, '🏠 হোমপেজে ফিরুন')
+            )
+          )
+        )
+      );
+    }
+
+    // ──── WISHLIST DRAWER ────
+    function WishlistDrawer({ isOpen, onClose, wishlist, products, onRemove, onAddToCart }) {
+      if (!isOpen) return null;
+      const items = products.filter(p => wishlist.includes(p.id));
+      return e('div', { className: 'fixed inset-0 z-[55]' },
+        e('div', { className: 'absolute inset-0 bg-black/50 backdrop-blur-sm', onClick: onClose }),
+        e('div', { className: 'absolute inset-y-0 right-0 max-w-full flex' },
+          e('div', { className: 'w-screen max-w-md bg-white dark:bg-slate-800 shadow-2xl flex flex-col animate-slide-right' },
+            e('div', { className: 'p-5 border-b dark:border-slate-700 flex justify-between items-center' },
+              e('h2', { className: 'font-bold dark:text-white' }, `♥ ইচ্ছেতালিকা (${toBn(items.length)})`),
+              e('button', { onClick: onClose, className: 'text-xl p-1 hover:text-rose-600 dark:hover:text-rose-400 transition-colors' }, '✕')
+            ),
+            e('div', { className: 'flex-1 overflow-y-auto p-5' },
+              items.length === 0
+                ? e('div', { className: 'text-center py-16' }, e('p', { className: 'text-5xl mb-4' }, '💝'), e('p', { className: 'text-gray-500 dark:text-gray-400' }, 'ইচ্ছেতালিকা খালি!'), e('a', { href: '#menu', onClick: onClose, className: 'inline-block mt-4 px-6 py-2 bg-rose-500 text-white rounded-xl text-sm font-bold' }, 'মেন্যু দেখুন'))
+                : e('div', { className: 'flex flex-col gap-3' },
+                  ...items.map(p => e('div', { key: p.id, className: 'flex gap-3 items-center p-3 bg-gray-50 dark:bg-slate-700 rounded-xl hover:shadow-md transition-shadow' },
+                    e('img', { src: p.image, alt: p.name, className: 'w-16 h-16 object-cover rounded-lg flex-shrink-0', onError: (ev) => { ev.target.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="%23fce7f3"><rect width="64" height="64"/><text x="32" y="40" text-anchor="middle" font-size="32">🎂</text></svg>'); } }),
+                    e('div', { className: 'flex-1 min-w-0' },
+                      e('h4', { className: 'font-bold text-sm truncate dark:text-white' }, p.name),
+                      e('p', { className: 'text-rose-600 font-bold text-sm' }, `${toBn(p.price)} ৳`)
+                    ),
+                    e('div', { className: 'flex flex-col gap-1.5' },
+                      e('button', { onClick: () => onAddToCart(p), className: 'px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-xs font-bold transition-colors' }, '🛒'),
+                      e('button', { onClick: () => onRemove(p.id), className: 'px-3 py-1.5 bg-gray-200 dark:bg-slate-600 hover:bg-gray-300 dark:hover:bg-slate-500 rounded-lg text-xs transition-colors' }, '🗑️')
+                    )
+                  ))
+                )
+            )
+          )
+        )
+      );
+    }
+
+    // ──── AUTH MODAL ────
+    function AuthModal({ isOpen, onClose, onLogin, showToast }) {
+      const [mode, setMode] = useState('login');
+      const [form, setForm] = useState({ name: '', email: '', pass: '' });
+      const [err, setErr] = useState('');
+
+      useEffect(() => { if (!isOpen) { setErr(''); setForm({ name: '', email: '', pass: '' }); } }, [isOpen]);
+
+      if (!isOpen) return null;
+
+      const handleSubmit = (ev) => {
+        ev.preventDefault();
+        setErr('');
+        if (!form.email.includes('@')) { setErr('সঠিক ইমেইল দিন'); return; }
+        if (form.pass.length < 4) { setErr('পাসওয়ার্ড কমপক্ষে ৪ অক্ষরের'); return; }
+        if (mode === 'register' && !form.name.trim()) { setErr('নাম লিখুন'); return; }
+
+        const users = LS('users', []);
+        if (mode === 'register') {
+          if (users.find(u => u.email === form.email)) { setErr('এই ইমেইলে আগেই অ্যাকাউন্ট আছে'); return; }
+          const newUser = { id: Date.now(), name: form.name, email: form.email, pass: form.pass, avatar: '👤' };
+          SS('users', [...users, newUser]);
+          onLogin(newUser);
+          showToast(`স্বাগতম, ${newUser.name}! 🎉`);
+        } else {
+          const found = users.find(u => u.email === form.email && u.pass === form.pass);
+          if (!found) { setErr('ইমেইল বা পাসওয়ার্ড ভুল'); return; }
+          onLogin(found);
+          showToast(`স্বাগতম, ${found.name}!`);
+        }
+        onClose();
+      };
+
+      return e('div', { className: 'fixed inset-0 z-[60] flex items-center justify-center p-4' },
+        e('div', { className: 'fixed inset-0 bg-black/60 backdrop-blur-sm', onClick: onClose }),
+        e('div', { className: 'relative bg-white dark:bg-slate-800 w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-scale-in' },
+          e('div', { className: 'bg-gradient-to-r from-rose-500 to-pink-600 px-6 py-5 text-white text-center' },
+            e('div', { className: 'text-3xl mb-1' }, '🎂'),
+            e('h3', { className: 'font-bold text-lg' }, mode === 'login' ? 'লগইন করুন' : 'নতুন অ্যাকাউন্ট তৈরি'),
+            e('p', { className: 'text-xs text-rose-100' }, 'বেক আর্ট স্টাইলে আপনাকে স্বাগতম!')
+          ),
+          e('button', { onClick: onClose, className: 'absolute top-4 right-4 text-white/80 hover:text-white text-lg transition-colors' }, '✕'),
+          e('div', { className: 'p-6' },
+            e('form', { onSubmit: handleSubmit, className: 'flex flex-col gap-3' },
+              mode === 'register' && e('input', { type: 'text', placeholder: 'আপনার নাম *', value: form.name, onChange: ev => setForm({ ...form, name: ev.target.value }), className: 'w-full p-3 rounded-xl border dark:border-slate-600 focus:border-rose-500 outline-none text-sm bg-white dark:bg-slate-700 dark:text-white transition-colors' }),
+              e('input', { type: 'email', placeholder: 'ইমেইল ঠিকানা *', value: form.email, onChange: ev => setForm({ ...form, email: ev.target.value }), className: 'w-full p-3 rounded-xl border dark:border-slate-600 focus:border-rose-500 outline-none text-sm bg-white dark:bg-slate-700 dark:text-white transition-colors' }),
+              e('input', { type: 'password', placeholder: 'পাসওয়ার্ড (৪+ অক্ষর) *', value: form.pass, onChange: ev => setForm({ ...form, pass: ev.target.value }), className: 'w-full p-3 rounded-xl border dark:border-slate-600 focus:border-rose-500 outline-none text-sm bg-white dark:bg-slate-700 dark:text-white transition-colors' }),
+              err && e('p', { className: 'text-rose-600 text-xs font-medium bg-rose-50 dark:bg-rose-900/30 p-3 rounded-xl' }, '⚠ ' + err),
+              e('button', { type: 'submit', className: 'w-full py-3 bg-gradient-to-r from-rose-500 to-pink-600 text-white font-bold rounded-xl shadow-md btn-shine' },
+                mode === 'login' ? 'লগইন করুন' : 'অ্যাকাউন্ট তৈরি করুন'
+              )
+            ),
+            e('p', { className: 'text-center text-xs text-gray-500 dark:text-gray-400 mt-4' },
+              mode === 'login' ? 'অ্যাকাউন্ট নেই? ' : 'আগেই অ্যাকাউন্ট আছে? ',
+              e('button', { onClick: () => { setMode(mode === 'login' ? 'register' : 'login'); setErr(''); }, className: 'text-rose-600 dark:text-rose-400 font-bold hover:underline' },
+                mode === 'login' ? 'রেজিস্টার করুন' : 'লগইন করুন'
+              )
+            )
+          )
+        )
+      );
+    }
+
+    // ──── FOOTER ────
+    function Footer() {
+      return e('footer', { className: 'bg-gradient-to-b from-gray-900 to-rose-950 text-white pt-14 pb-8 border-t-4 border-rose-500' },
+        e('div', { className: 'max-w-7xl mx-auto px-4 sm:px-6' },
+          e('div', { className: 'grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-white/10' },
+            e('div', null,
+              e('div', { className: 'flex items-center gap-3 mb-4' },
+                e('span', { className: 'text-2xl' }, '🎂'),
+                e('h2', { className: 'text-xl font-bold' }, 'বেক আর্ট স্টাইল')
+              ),
+              e('p', { className: 'text-xs text-gray-400 leading-relaxed mb-5' }, 'কুমিল্লার হাট বলি বাড়ির হোমমেড বেকারি। ১০০% তাজা ও খাঁটি কেক, ডেলিভারি সার্ভিস।'),
+              e('div', { className: 'flex gap-3' },
+                e('a', { href: 'https://www.tiktok.com/@bakeartstyel', target: '_blank', rel: 'noopener', className: 'w-8 h-8 rounded-full bg-white/10 hover:bg-rose-500 flex items-center justify-center text-xs font-bold transition-colors' }, 'TT'),
+                e('a', { href: 'https://wa.me/8801764411168', target: '_blank', rel: 'noopener', className: 'w-8 h-8 rounded-full bg-white/10 hover:bg-green-500 flex items-center justify-center text-xs font-bold transition-colors' }, 'WA'),
+                e('a', { href: 'tel:+8801764411168', className: 'w-8 h-8 rounded-full bg-white/10 hover:bg-rose-500 flex items-center justify-center text-xs font-bold transition-colors' }, '📞')
+              )
+            ),
+            e('div', null,
+              e('h3', { className: 'text-xs font-bold uppercase tracking-wider text-rose-400 mb-4' }, 'প্রয়োজনীয় লিংক'),
+              e('ul', { className: 'flex flex-col gap-2 text-xs text-gray-300' },
+                ['হোম:#hero', 'মেন্যু:#menu', 'কাস্টম কেক:#custom-cake', 'আমাদের কথা:#about', 'রিভিউ:#reviews', 'যোগাযোগ:#contact'].map(l => {
+                  const [n, h] = l.split(':');
+                  return e('li', { key: n }, e('a', { href: h, className: 'hover:text-rose-400 transition-colors' }, n));
+                })
+              )
+            ),
+            e('div', null,
+              e('h3', { className: 'text-xs font-bold uppercase tracking-wider text-rose-400 mb-4' }, 'যোগাযোগ'),
+              e('ul', { className: 'flex flex-col gap-2 text-xs text-gray-300' },
+                e('li', null, '📍 হাট বলি বাড়ি, কুমিল্লা'),
+                e('li', null, '📞 +880 1764-411168'),
+                e('li', null, '💬 WhatsApp: +880 1764-411168'),
+                e('li', null, '⏰ সর্বদা উন্মুক্ত')
+              )
+            )
+          ),
+          e('div', { className: 'pt-6 text-center text-xs text-gray-500 flex flex-col sm:flex-row items-center justify-between gap-3' },
+            e('p', null, `© ${new Date().getFullYear()} বেক আর্ট স্টাইল (Bake Art Style)। সর্বস্বত্ব সংরক্ষিত।`),
+            e('a', { href: 'tel:+8801764411168', className: 'hover:text-white transition-colors' }, 'হাট বলি বাড়ি, কুমিল্লা — +880 1764-411168')
+          )
+        )
+      );
+    }
+
+    // ──── MAIN APP ────
+    function App() {
+      const [products, setProducts] = useState(() => LS('products', DEFAULT_PRODUCTS));
+      const [settings, setSettings] = useState(() => LS('settings', DEFAULT_SETTINGS));
+      const [user, setUser] = useState(() => LS('currentUser', null));
+      const [cart, setCart] = useState(() => LS('cart', []));
+      const [wishlist, setWishlist] = useState(() => LS('wishlist', []));
+      const [dark, setDark] = useState(() => {
+        try { return LS('darkMode', window.matchMedia('(prefers-color-scheme: dark)').matches); }
+        catch { return false; }
+      });
+      const [isCartOpen, setIsCartOpen] = useState(false);
+      const [isWishlistOpen, setIsWishlistOpen] = useState(false);
+      const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+      const [isAuthOpen, setIsAuthOpen] = useState(false);
+      const [quickViewProduct, setQuickViewProduct] = useState(null);
+      const [promoCode, setPromoCode] = useState('');
+      const [discount, setDiscount] = useState(0);
+      const [toasts, setToasts] = useState([]);
+
+      // Sync localStorage
+      useEffect(() => { SS('products', products); }, [products]);
+      useEffect(() => { SS('settings', settings); }, [settings]);
+      useEffect(() => { SS('currentUser', user); }, [user]);
+      useEffect(() => { SS('cart', cart); }, [cart]);
+      useEffect(() => { SS('wishlist', wishlist); }, [wishlist]);
+      useEffect(() => { SS('darkMode', dark); document.documentElement.classList.toggle('dark', dark); }, [dark]);
+
+      useEffect(() => {
+        const locked = isCartOpen || isWishlistOpen || isCheckoutOpen || isAuthOpen || !!quickViewProduct;
+        document.body.style.overflow = locked ? 'hidden' : '';
+        return () => { document.body.style.overflow = ''; };
+      }, [isCartOpen, isWishlistOpen, isCheckoutOpen, isAuthOpen, quickViewProduct]);
+
+      useEffect(() => {
+        const onKey = (ev) => {
+          if (ev.key !== 'Escape') return;
+          setIsCartOpen(false);
+          setIsWishlistOpen(false);
+          setIsAuthOpen(false);
+          setQuickViewProduct(null);
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+      }, []);
+
+      const showToast = useCallback((message, type = 'success') => {
+        const id = Date.now();
+        setToasts(prev => [...prev, { id, message, type }]);
+        setTimeout(() => setToasts(prev => prev.filter(t => t.id !== id)), 3500);
+      }, []);
+
+      const addToCart = useCallback((p) => {
+        setCart(prev => {
+          const ex = prev.find(i => i.id === p.id);
+          if (ex) return prev.map(i => i.id === p.id ? { ...i, quantity: i.quantity + (p.quantity || 1) } : i);
+          return [...prev, { ...p, quantity: p.quantity || 1 }];
+        });
+        showToast(`"${p.name}" কার্টে যোগ হয়েছে! 🛒`);
+      }, [showToast]);
+
+      const addCustomCake = useCallback((p) => {
+        setCart(prev => [...prev, { ...p, quantity: 1 }]);
+        showToast('কাস্টম কেক কার্টে যুক্ত হয়েছে!');
+        setIsCartOpen(true);
+      }, [showToast]);
+
+      const toggleWishlist = useCallback((id) => {
+        setWishlist(prev => {
+          const has = prev.includes(id);
+          showToast(has ? 'ইচ্ছেতালিকা থেকে সরানো হয়েছে 💔' : 'ইচ্ছেতালিকায় যোগ হয়েছে! ♥');
+          return has ? prev.filter(x => x !== id) : [...prev, id];
+        });
+      }, [showToast]);
+
+      const updateQty = useCallback((id, q) => {
+        if (q < 1) {
+          setCart(prev => prev.filter(i => i.id !== id));
+          showToast('আইটেম কার্ট থেকে সরানো হয়েছে', 'error');
+        } else {
+          setCart(prev => prev.map(i => i.id === id ? { ...i, quantity: q } : i));
+        }
+      }, [showToast]);
+
+      const removeItem = useCallback((id) => {
+        setCart(prev => prev.filter(i => i.id !== id));
+        showToast('আইটেম কার্ট থেকে সরানো হয়েছে', 'error');
+      }, [showToast]);
+
+      const clearCart = useCallback(() => {
+        setCart([]);
+        setDiscount(0);
+        setPromoCode('');
+      }, []);
+
+      const cartCount = cart.reduce((s, i) => s + i.quantity, 0);
+      const bestProducts = products
+        .filter(p => p.approved)
+        .sort((a, b) => (b.reviews * b.rating) - (a.reviews * a.rating))
+        .slice(0, 4);
+
+      return e('div', { className: 'min-h-screen flex flex-col' },
+        e(Navbar, { cartCount, onOpenCart: () => setIsCartOpen(true), user, onOpenAuth: () => setIsAuthOpen(true), onLogout: () => { setUser(null); SS('currentUser', null); showToast('সফলভাবে লগআউট হয়েছে 👋'); }, wishlistCount: wishlist.length, onOpenWishlist: () => setIsWishlistOpen(true), dark, setDark }),
+        e(Hero, { onAdminTrigger: () => showToast('🔐 অ্যাডমিন প্যানেল — PIN: 1234 (ডেমো)'), bestProducts }),
+        e(SpecialOffers, { settings }),
+        e(MenuSection, { products, onAddToCart: addToCart, wishlist, toggleWishlist, onQuickView: setQuickViewProduct }),
+        e(CustomCake, { onAddCustomCake: addCustomCake }),
+        e(AboutSection),
+        e(Testimonials),
+        e(ContactSection, { showToast }),
+        e(Footer),
+        e(WhatsAppFloat),
+        e(ScrollTop),
+        e(CartDrawer, { isOpen: isCartOpen, onClose: () => setIsCartOpen(false), cart, onUpdateQty: updateQty, onRemove: removeItem, onCheckout: () => { setIsCartOpen(false); setIsCheckoutOpen(true); }, promoCode, setPromoCode, discount, onApplyPromo: setDiscount, showToast, settings }),
+        e(CheckoutModal, { isOpen: isCheckoutOpen, onClose: () => setIsCheckoutOpen(false), cart, discount, onClearCart: clearCart, showToast, settings }),
+        e(QuickViewModal, { product: quickViewProduct, isOpen: !!quickViewProduct, onClose: () => setQuickViewProduct(null), onAddToCart: addToCart, wishlist, toggleWishlist }),
+        e(WishlistDrawer, { isOpen: isWishlistOpen, onClose: () => setIsWishlistOpen(false), wishlist, products, onRemove: toggleWishlist, onAddToCart: addToCart }),
+        e(AuthModal, { isOpen: isAuthOpen, onClose: () => setIsAuthOpen(false), onLogin: setUser, showToast }),
+        e(Toasts, { toasts })
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(e(App));
+  </script>
+</body>
 </html>
